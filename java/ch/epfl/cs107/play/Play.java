@@ -3,7 +3,9 @@ package ch.epfl.cs107.play;
 import java.awt.GraphicsEnvironment;
 
 import ch.epfl.cs107.play.game.Game;
+import ch.epfl.cs107.play.game.areagame.AreaGame;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
+import ch.epfl.cs107.play.game.tutos.Tuto1;
 import ch.epfl.cs107.play.io.DefaultFileSystem;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.io.ResourceFileSystem;
@@ -18,74 +20,75 @@ import ch.epfl.cs107.play.window.swing.SwingWindow;
  */
 public class Play {
 
-	/** One second in nano second */
-    private static final float ONE_SEC = 1E9f;
+  /** One second in nano second */
+  private static final float ONE_SEC = 1E9f;
 
-	/**
-	 * Main entry point.
-	 * @param args (Array of String): ignored
-	 */
-	public static void main(String[] args) {
+  /**
+   * Main entry point.
+   * 
+   * @param args (Array of String): ignored
+   */
+  public static void main(String[] args) {
 
-		// Define cascading file system
-		final FileSystem fileSystem = new ResourceFileSystem(DefaultFileSystem.INSTANCE);
+    // Define cascading file system
+    final FileSystem fileSystem = new ResourceFileSystem(DefaultFileSystem.INSTANCE);
 
-        // Create a demo game :
-		// (it is expected that at the beginning, the provided file does not compile)
-       
-        //final Game game = new SuperPacman();
+    // Create a demo game :
+    // (it is expected that at the beginning, the provided file does not compile)
 
-		// Use Swing display
-		final Window window = new SwingWindow(game.getTitle(), fileSystem, 550, 550);
-		window.registerFonts(ResourcePath.FONTS);
-		
-		Recorder recorder = new Recorder(window);
-		RecordReplayer replayer = new RecordReplayer(window);
-		try {
+    final AreaGame game = new Tuto1();
 
-			if (game.begin(window, fileSystem)) {
-				//recorder.start();
-				//replayer.start("record1.xml");
+    // Use Swing display
+    final Window window = new SwingWindow(game.getTitle(), fileSystem, 550, 550);
+    window.registerFonts(ResourcePath.FONTS);
 
-				// Use system clock to keep track of time progression
-                long currentTime = System.nanoTime();
-				long lastTime;
-				final float frameDuration = ONE_SEC / game.getFrameRate();
+    Recorder recorder = new Recorder(window);
+    RecordReplayer replayer = new RecordReplayer(window);
+    try {
 
-				// Run until the user try to close the window
-				while (!window.isCloseRequested()) {
+      if (game.begin(window, fileSystem)) {
+        // recorder.start();
+        // replayer.start("record1.xml");
 
-					// Compute time interval
-                    lastTime = currentTime;
-                    currentTime = System.nanoTime();
-					float deltaTime = (currentTime - lastTime);
+        // Use system clock to keep track of time progression
+        long currentTime = System.nanoTime();
+        long lastTime;
+        final float frameDuration = ONE_SEC / game.getFrameRate();
 
-                    try {
-                        int timeDiff = Math.max(0, (int) (frameDuration - deltaTime));
-                        Thread.sleep((int) (timeDiff / 1E6), (int) (timeDiff % 1E6));
-                    } catch (InterruptedException e) {
-                        System.out.println("Thread sleep interrupted");
-                    }
+        // Run until the user try to close the window
+        while (!window.isCloseRequested()) {
 
-                    currentTime = System.nanoTime();
-                    deltaTime = (currentTime - lastTime) / ONE_SEC;
+          // Compute time interval
+          lastTime = currentTime;
+          currentTime = System.nanoTime();
+          float deltaTime = (currentTime - lastTime);
 
-                    // Let the game do its stuff
-                    game.update(deltaTime);
+          try {
+            int timeDiff = Math.max(0, (int) (frameDuration - deltaTime));
+            Thread.sleep((int) (timeDiff / 1E6), (int) (timeDiff % 1E6));
+          } catch (InterruptedException e) {
+            System.out.println("Thread sleep interrupted");
+          }
 
-                    // Render and update input
-                    window.update();
-                    //recorder.update();
-                    //replayer.update();
-				}
-			}
-			//recorder.stop("record1.xml");
-			game.end();
+          currentTime = System.nanoTime();
+          deltaTime = (currentTime - lastTime) / ONE_SEC;
 
-		} finally {
-			// Release resources
-			window.dispose();
-		}
-	}
+          // Let the game do its stuff
+          game.update(deltaTime);
+
+          // Render and update input
+          window.update();
+          // recorder.update();
+          // replayer.update();
+        }
+      }
+      // recorder.stop("record1.xml");
+      game.end();
+
+    } finally {
+      // Release resources
+      window.dispose();
+    }
+  }
 
 }

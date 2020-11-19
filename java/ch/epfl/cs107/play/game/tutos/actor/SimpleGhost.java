@@ -15,7 +15,8 @@ public class SimpleGhost extends Entity {
   private Sprite sprite;
 
   public SimpleGhost(Vector position, String spriteName) {
-    sprite = new Sprite(spriteName, 1.0f, 1.0f, this);
+    super(position);
+    sprite = new Sprite(spriteName, 1000.0f, 1000.0f, this);
     hpText = new TextGraphics(Integer.toString((int) health), 0.4f, Color.BLUE);
     hpText.setParent(this);
     this.hpText.setAnchor(new Vector(-0.3f, 0.1f));
@@ -29,12 +30,12 @@ public class SimpleGhost extends Entity {
     this.health = 10;
   }
 
-  public void draw(Canvas canvas){
+  public void draw(Canvas canvas) {
     sprite.draw(canvas);
     hpText.draw(canvas);
   }
 
-  public void update(float deltaTime){
+  public void update(float deltaTime) {
     health -= deltaTime;
   }
 
