@@ -16,10 +16,10 @@ public class SimpleGhost extends Entity {
 
   public SimpleGhost(Vector position, String spriteName) {
     super(position);
-    sprite = new Sprite(spriteName, 1000.0f, 1000.0f, this);
-    hpText = new TextGraphics(Integer.toString((int) health), 0.4f, Color.BLUE);
-    hpText.setParent(this);
-    this.hpText.setAnchor(new Vector(-0.3f, 0.1f));
+    this.sprite = new Sprite(spriteName, 1.0f, 1.0f, this);
+    this.hpText = new TextGraphics(Integer.toString((int) this.health), 1f, Color.BLUE);
+    this.hpText.setParent(this);
+    this.hpText.setAnchor(new Vector(0f, 1f));
   }
 
   public boolean isWeak() {
@@ -31,12 +31,14 @@ public class SimpleGhost extends Entity {
   }
 
   public void draw(Canvas canvas) {
-    sprite.draw(canvas);
-    hpText.draw(canvas);
+    this.sprite.draw(canvas);
+    this.hpText.draw(canvas);
   }
 
+  @Override
   public void update(float deltaTime) {
-    health -= deltaTime;
+    this.health -= deltaTime;
+    this.hpText.setText((Integer.toString((int) this.health)));
   }
 
 }

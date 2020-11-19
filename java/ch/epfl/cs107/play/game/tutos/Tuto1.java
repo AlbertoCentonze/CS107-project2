@@ -8,7 +8,6 @@ import ch.epfl.cs107.play.window.Window;
 
 public class Tuto1 extends AreaGame {
   private void createAreas() {
-    addArea(new Ferme());
     addArea(new Village());
     setCurrentArea("zelda/Village", true);
   }
