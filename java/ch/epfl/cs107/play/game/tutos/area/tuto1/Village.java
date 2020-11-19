@@ -1,5 +1,5 @@
 package ch.epfl.cs107.play.game.tutos.area.tuto1;
 
-public class Village {
+public class Village extends SimpleArea {
   
 }
