@@ -6,6 +6,7 @@ import ch.epfl.cs107.play.math.Vector;
 
 public class Village extends SimpleArea {
   SimpleGhost ghost = new SimpleGhost(new Vector(18, 7), "ghost.2");
+  SimpleGhost player = new SimpleGhost(new Vector(15, 7), "ghost.1");
 
   @Override
   public String getTitle() {
@@ -14,11 +15,17 @@ public class Village extends SimpleArea {
 
   public void createArea() {
     registerActor(ghost);
+    registerActor(player);
   }
 
   @Override
   public float getCameraScaleFactor() {
     return 10.f;
+  }
+
+  public void update(float deltaTime) {
+    super.update(deltaTime);
+    player.moveUp();
   }
 
 }

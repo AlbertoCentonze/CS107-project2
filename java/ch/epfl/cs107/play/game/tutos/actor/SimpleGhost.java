@@ -41,4 +41,7 @@ public class SimpleGhost extends Entity {
     this.hpText.setText((Integer.toString((int) this.health)));
   }
 
+  public void moveUp() {
+    setCurrentPosition(getPosition().add(0.0f, 0.2f));
+  }
 }
