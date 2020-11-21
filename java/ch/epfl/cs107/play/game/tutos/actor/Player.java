@@ -11,7 +11,7 @@ import java.awt.Color;
 
 public class Player extends Entity {
 
-  public double health = 10;
+  public double health = 4.0;
   private TextGraphics hpText;
   private Sprite sprite;
 
@@ -28,7 +28,7 @@ public class Player extends Entity {
   }
 
   public void strengthen() {
-    this.health = 10;
+    this.health = 4.0;
   }
 
   public void draw(Canvas canvas) {
