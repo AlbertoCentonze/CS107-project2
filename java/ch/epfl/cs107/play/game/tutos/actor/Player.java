@@ -5,6 +5,7 @@ import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
+import ch.epfl.cs107.play.window.Keyboard;
 
 import java.awt.Color;
 
@@ -41,7 +42,8 @@ public class Player extends Entity {
     this.hpText.setText((Integer.toString((int) this.health)));
   }
 
-  public void moveUp() {
-    setCurrentPosition(getPosition().add(0.0f, 0.2f));
+  public void move(Vector delta) {
+    setCurrentPosition(getPosition().add(delta));
   }
+
 }
