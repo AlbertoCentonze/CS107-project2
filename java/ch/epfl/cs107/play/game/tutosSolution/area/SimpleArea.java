@@ -1,7 +1,8 @@
-package ch.epfl.cs107.play.game.tutos.area;
+package ch.epfl.cs107.play.game.tutosSolution.area;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
+import ch.epfl.cs107.play.game.tutosSolution.Tuto1;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.window.Image;
 import ch.epfl.cs107.play.window.Window;
@@ -19,12 +20,14 @@ abstract public class SimpleArea extends Area {
 	public int getWidth() {
 		 Image   behaviorMap = window.getImage(ResourcePath.getBehaviors(getTitle()), null, false);
 	     return  behaviorMap.getWidth();
+
 	}
 	
 	@Override
 	public int getHeight() {
 		 Image behaviorMap = window.getImage(ResourcePath.getBehaviors(getTitle()), null, false);
 		 return  behaviorMap.getHeight();
+
 	}
 	
 	 @Override
@@ -38,4 +41,8 @@ abstract public class SimpleArea extends Area {
 	        return false;
 	    }
 	 
+	 @Override
+	    public final float getCameraScaleFactor() {
+	        return Tuto1.CAMERA_SCALE_FACTOR;
+	    }
 }
