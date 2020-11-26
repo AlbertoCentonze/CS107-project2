@@ -19,11 +19,46 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 public class SuperPacmanPlayer extends Player {
+  private final static int ANIMATION_DURATION = 6;
+
   private Sprite playerSprite;
 
   public SuperPacmanPlayer(Area ownerArea, DiscreteCoordinates position) {
     super(ownerArea, Orientation.RIGHT, position);
     playerSprite = new Sprite("yellowDot", 1.f, 1.f, this);
+  }
+
+  @Override
+  public void update(float deltaTime) {
+    Keyboard keyboard = getOwnerArea().getKeyboard();
+    // TODO getOwnerArea().canEnterAreaCells(this, ) which coordiantes
+    if (isDisplacementOccurs()) {
+      // Listen for directions
+      moveOrientate(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
+      moveOrientate(Orientation.UP, keyboard.get(Keyboard.UP));
+      moveOrientate(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
+      moveOrientate(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
+    }
+    // Move the player according to the current orientation
+    move(ANIMATION_DURATION);
+
+    super.update(deltaTime);
+
+  }
+
+  /**
+   * 
+   * Orientate or Move this player in the given orientation if the given button
+   * is*down**
+   * 
+   * @param orientation (Orientation): given orientation, not null
+   * @param b           (Button): button corresponding to the given orientation,
+   *                    not null
+   */
+  private void moveOrientate(Orientation orientation, Button b) {
+    if (b.isDown() && getOrientation() != orientation)
+      orientate(orientation);
+
   }
 
   @Override
@@ -89,7 +124,7 @@ public class SuperPacmanPlayer extends Player {
   // private TextGraphics message;
   // private Sprite sprite;
   ///// Animation duration in frame number
-  // private final static int ANIMATION_DURATION = 8;
+
   //
   /// **
   // * Demo actor
@@ -107,42 +142,7 @@ public class SuperPacmanPlayer extends Player {
   // resetMotion();
   // }
   //
-  // @Override
-  // public void update(float deltaTime) {
-  // if (hp > 0) {
-  // hp -= deltaTime;
-  // message.setText(Integer.toString((int) hp));
-  // }
-  // if (hp < 0)
-  // hp = 0.f;
-  // Keyboard keyboard = getOwnerArea().getKeyboard();
-  // moveOrientate(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
-  // moveOrientate(Orientation.UP, keyboard.get(Keyboard.UP));
-  // moveOrientate(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
-  // moveOrientate(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
-  //
-  // super.update(deltaTime);
-  //
-  // }
-  //
-  /// **
-  // * Orientate or Move this player in the given orientation if the given button
-  // is
-  // * down
-  // *
-  // * @param orientation (Orientation): given orientation, not null
-  // * @param b (Button): button corresponding to the given orientation,
-  // * not null
-  // */
-  // private void moveOrientate(Orientation orientation, Button b) {
-  //
-  // if (b.isDown()) {
-  // if (getOrientation() == orientation)
-  // move(ANIMATION_DURATION);
-  // else
-  // orientate(orientation);
-  // }
-  // }
+
   //
   /// **
   // * Leave an area by unregister this player

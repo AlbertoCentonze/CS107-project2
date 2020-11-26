@@ -60,16 +60,40 @@ public class SuperPacmanBehavior extends AreaBehavior {
       for (int x = 0; x < width; x++) {
         SuperPacmanCell currentCell = (SuperPacmanCell) getCell(x, y);
         if (currentCell.getType() == SuperPacmanCellType.WALL) {
-          area.registerActor(new Wall(area, new DiscreteCoordinates(x, y),
-              new boolean[][] { { true, true, true }, { true, true, true }, { true, true, true } }));
+          DiscreteCoordinates currentPosition = new DiscreteCoordinates(x, y);
+
+          boolean[][] neighbours = getNeighbours(currentPosition);
+
+          area.registerActor(new Wall(area, currentPosition, neighbours));
         }
       }
     }
   }
 
-  @Override
-  protected SuperPacmanCell getCell(int x, int y) {
-    return (SuperPacmanCell) super.getCell(x, y); // TODO DOES THIS WORK?
+  // TODO explain it
+  public boolean[][] getNeighbours(DiscreteCoordinates point) {
+    int height = getHeight();
+    int width = getWidth();
+    boolean[][] neighbours = new boolean[3][3];
+    neighbours[1][1] = true;
+
+    for (int xOffset = -1; xOffset < 2; ++xOffset) {
+      for (int yOffset = -1; yOffset < 2; ++yOffset) { // TODO checks if it loops correctly
+        DiscreteCoordinates currentNeighbour = new DiscreteCoordinates(point.x + xOffset, point.y + yOffset);
+        // TODO do you need to be so carefull?
+        if (currentNeighbour.x == 0 && currentNeighbour.y == 0)
+          continue;
+        if (currentNeighbour.x <= 0 || currentNeighbour.y <= 0 || currentNeighbour.x >= width
+            || currentNeighbour.y >= height)
+          continue;
+        SuperPacmanCell cell = (SuperPacmanCell) getCell(currentNeighbour.x, currentNeighbour.y);
+        SuperPacmanCellType type = cell.getType();
+        boolean check = cell.getType() == SuperPacmanCellType.WALL;
+        if (cell.getType() == SuperPacmanCellType.WALL)
+          neighbours[xOffset + 1][yOffset + 1] = true;
+      }
+    }
+    return neighbours;
   }
 
   /**
@@ -102,7 +126,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
     @Override
     protected boolean canEnter(Interactable entity) {
-      return true; // TODO FULL PRIORITY takeCellSpace?
+      return takeCellSpace(); // TODO ????
     }
 
     @Override

@@ -187,24 +187,6 @@ public class Wall extends AreaEntity{
 		if(sprite != null)
 			sprite.draw(canvas);
 	}
-  // TODO explain it
-  public static boolean[][] getNeighbours(int x, int y) {
-    boolean[][] neighbours = new boolean[3][3];
-    neighbours[1][1] = true;
 
-    for (int xOffset = -1; x < 2; ++x) {
-      for (int yOffset = -1; y < 2; ++y) { // TODO checks if it loops correctly
-        int[] currentPoint = new int[] { x + xOffset, y + yOffset };
-        if (currentPoint[0] == 0 && currentPoint[1] == 0) { // the wall itself
-          continue;
-        }
-        for (int component : currentPoint) { // negative coordinates => out of bounds
-          if (component <= 0)
-            continue;
-        }
-        // TODO
-      }
-    }
-    return neighbours;
   }
 }
