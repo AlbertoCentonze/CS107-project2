@@ -49,7 +49,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
       for (int x = 0; x < width; x++) {
         int translatedY = height - 1 - y;
         SuperPacmanCellType type = SuperPacmanCellType.toType(getRGB(translatedY, x));
-        setCell(x, translatedY, new SuperPacmanCell(x, y, type));
+        setCell(x, y, new SuperPacmanCell(x, y, type));
       }
     }
   }
@@ -59,9 +59,10 @@ public class SuperPacmanBehavior extends AreaBehavior {
     int width = getWidth();
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        SuperPacmanCell currentCell = (SuperPacmanCell) getCell(x, y);
+        int translatedY = height - 1 - y;
+        SuperPacmanCell currentCell = (SuperPacmanCell) getCell(x, translatedY);
         if (currentCell.getType() == SuperPacmanCellType.WALL) {
-          DiscreteCoordinates currentPosition = new DiscreteCoordinates(x, y);
+          DiscreteCoordinates currentPosition = new DiscreteCoordinates(x, translatedY);
 
           boolean[][] neighbours = getNeighbours(currentPosition);
 
@@ -71,23 +72,21 @@ public class SuperPacmanBehavior extends AreaBehavior {
     }
   }
 
-  // TODO explain it
   public boolean[][] getNeighbours(DiscreteCoordinates point) {
     int height = getHeight();
     int width = getWidth();
     boolean[][] neighbours = new boolean[3][3];
 
-    for (int yOffset = -1; yOffset < 2; ++yOffset) { // TODO checks if it loops correctly
+    for (int yOffset = -1; yOffset < 2; ++yOffset) {
       for (int xOffset = -1; xOffset < 2; ++xOffset) {
         DiscreteCoordinates currentNeighbour = new DiscreteCoordinates(point.x + xOffset, point.y + yOffset);
-        // TODO do you need to be so carefull?
         if (currentNeighbour.x < 0 || currentNeighbour.y < 0 || currentNeighbour.x >= width
             || currentNeighbour.y >= height)
           continue;
         SuperPacmanCell cell = (SuperPacmanCell) getCell(currentNeighbour.x, currentNeighbour.y);
         SuperPacmanCellType type = cell.getType();
         if (type == SuperPacmanCellType.WALL)
-          neighbours[(xOffset + 1)][2 - (yOffset + 1)] = true;
+          neighbours[xOffset + 1][2 - (yOffset + 1)] = true;
       }
     }
     return neighbours;

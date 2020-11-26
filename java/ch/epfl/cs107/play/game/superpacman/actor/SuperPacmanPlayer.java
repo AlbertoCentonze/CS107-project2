@@ -1,6 +1,8 @@
 package ch.epfl.cs107.play.game.superpacman.actor;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
@@ -29,20 +32,52 @@ public class SuperPacmanPlayer extends Player {
     resetMotion();
   }
 
+  private List<DiscreteCoordinates> getNeighbourPosition() {
+    List<DiscreteCoordinates> result;
+    Vector resultVector;
+    Vector orientationVector;
+
+    switch (getOrientation()) {
+      case DOWN:
+        orientationVector = new Vector(0, -1);
+        break;
+      case LEFT:
+        orientationVector = new Vector(-1, 0);
+        break;
+      case RIGHT:
+        orientationVector = new Vector(1, 0);
+        break;
+      case UP:
+        orientationVector = new Vector(0, 1);
+        break;
+      default:
+        orientationVector = new Vector(0, 0);
+        break;
+
+    }
+
+    resultVector = getPosition().add(orientationVector);
+
+    return new ArrayList<DiscreteCoordinates>(
+        Arrays.asList(new DiscreteCoordinates((int) orientationVector.x, (int) orientationVector.y)));
+  }
+
   @Override
   public void update(float deltaTime) {
-    Keyboard keyboard = getOwnerArea().getKeyboard();
-    // TODO getOwnerArea().canEnterAreaCells(this, ) which coordiantes
+    Area playerArea = getOwnerArea();
+    Keyboard keyboard = playerArea.getKeyboard();
+    boolean canGoForward = playerArea.canEnterAreaCells(this, getNeighbourPosition());
+
     if (!isDisplacementOccurs()) {
-      System.out.println("asdf");
       // Listen for directions
       moveOrientate(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
       moveOrientate(Orientation.UP, keyboard.get(Keyboard.UP));
       moveOrientate(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
       moveOrientate(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
+
+      // Move the player according to the current orientation
+      move(ANIMATION_DURATION);
     }
-    // Move the player according to the current orientation
-    move(ANIMATION_DURATION);
 
     super.update(deltaTime);
 

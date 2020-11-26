@@ -18,8 +18,6 @@ abstract public class SuperPacmanArea extends Area {
     behavior.registerActors(this);
   };
 
-  /// EnigmeArea extends Area
-
   @Override
   public final float getCameraScaleFactor() {
     return SuperPacman.CAMERA_SCALE_FACTOR;
@@ -36,4 +34,5 @@ abstract public class SuperPacmanArea extends Area {
     }
     return false;
   }
+
 }
