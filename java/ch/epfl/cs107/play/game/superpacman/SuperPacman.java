@@ -7,7 +7,6 @@ import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 import ch.epfl.cs107.play.game.superpacman.area.Level0;
 import ch.epfl.cs107.play.game.superpacman.area.Level1;
 import ch.epfl.cs107.play.game.superpacman.area.Level2;
-import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
@@ -18,7 +17,7 @@ public class SuperPacman extends RPG {
 
   private Player player;
   // TODO maybe we could create a level structure class
-  private final String[] areas = { "superpacman/Level0", "superpacman/Level1", "superpacman/Level2" };
+  private final String[] areas = { "superpacman/Level0", "superpacman/Level0", "superpacman/Level2" };
   public static final DiscreteCoordinates[] PLAYER_SPAWN_COORDINATES = { new DiscreteCoordinates(5, 1),
       new DiscreteCoordinates(15, 6), new DiscreteCoordinates(15, 29) };
   private int areaIndex;
@@ -27,11 +26,9 @@ public class SuperPacman extends RPG {
    * Add all the areas
    */
   private void createAreas() {
-
     addArea(new Level0());
     addArea(new Level1());
     addArea(new Level2());
-
   }
 
   @Override
@@ -65,15 +62,6 @@ public class SuperPacman extends RPG {
     return "Super Pacman";
   }
 
-  // protected void switchArea() {
-  //
   // player.leaveArea();
-  //
-  // areaIndex = (areaIndex == 0) ? 1 : 0;
-  //
-  // Area currentArea = setCurrentArea(areas[areaIndex], false);
   // player.enterArea(currentArea, startingPositions[areaIndex]);
-  //
-  // player.strengthen();
-  // }
 }

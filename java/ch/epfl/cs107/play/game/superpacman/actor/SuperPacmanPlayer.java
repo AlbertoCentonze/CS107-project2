@@ -25,13 +25,16 @@ public class SuperPacmanPlayer extends Player {
   public SuperPacmanPlayer(Area ownerArea, DiscreteCoordinates position) {
     super(ownerArea, Orientation.RIGHT, position);
     playerSprite = new Sprite("ghost.1", 1.f, 1.f, this);
+
+    resetMotion();
   }
 
   @Override
   public void update(float deltaTime) {
     Keyboard keyboard = getOwnerArea().getKeyboard();
     // TODO getOwnerArea().canEnterAreaCells(this, ) which coordiantes
-    if (isDisplacementOccurs()) {
+    if (!isDisplacementOccurs()) {
+      System.out.println("asdf");
       // Listen for directions
       moveOrientate(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
       moveOrientate(Orientation.UP, keyboard.get(Keyboard.UP));
@@ -102,20 +105,16 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public boolean isCellInteractable() {
-    // TODO Auto-generated method stub
-    return false;
+    return true;
   }
 
   @Override
   public boolean isViewInteractable() {
-    // TODO Auto-generated method stub
-    return false;
+    return true;
   }
 
   @Override
   public void acceptInteraction(AreaInteractionVisitor v) {
-    // TODO Auto-generated method stub
-
   }
 
   // private float hp;
@@ -123,11 +122,6 @@ public class SuperPacmanPlayer extends Player {
   // private Sprite sprite;
   ///// Animation duration in frame number
 
-  //
-  /// **
-  // * Demo actor
-  // *
-  // */
   // public SuperPacmanPlayer(Area owner, Orientation orientation,
   // DiscreteCoordinates coordinates, String spriteName) {
   // super(owner, orientation, coordinates);
@@ -189,12 +183,4 @@ public class SuperPacmanPlayer extends Player {
   // return true;
   // }
   //
-  // @Override
-  // public List<DiscreteCoordinates> getCurrentCells() {
-  // return Collections.singletonList(getCurrentMainCellCoordinates());
-  // }
-  //
-  // @Override
-  // public void acceptInteraction(AreaInteractionVisitor v) {
-  // }
 }

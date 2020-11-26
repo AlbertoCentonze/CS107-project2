@@ -86,9 +86,8 @@ public class SuperPacmanBehavior extends AreaBehavior {
           continue;
         SuperPacmanCell cell = (SuperPacmanCell) getCell(currentNeighbour.x, currentNeighbour.y);
         SuperPacmanCellType type = cell.getType();
-        boolean check = cell.getType() == SuperPacmanCellType.WALL;
-        if (cell.getType() == SuperPacmanCellType.WALL)
-          neighbours[yOffset + 1][xOffset + 1] = true;
+        if (type == SuperPacmanCellType.WALL)
+          neighbours[(xOffset + 1)][2 - (yOffset + 1)] = true;
       }
     }
     return neighbours;
