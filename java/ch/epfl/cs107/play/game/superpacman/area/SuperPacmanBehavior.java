@@ -124,7 +124,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
     @Override
     protected boolean canEnter(Interactable entity) {
-      return takeCellSpace(); // TODO ????
+      return true; // TODO ????
     }
 
     @Override

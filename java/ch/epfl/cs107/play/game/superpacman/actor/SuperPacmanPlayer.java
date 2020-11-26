@@ -13,7 +13,6 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
@@ -25,7 +24,7 @@ public class SuperPacmanPlayer extends Player {
 
   public SuperPacmanPlayer(Area ownerArea, DiscreteCoordinates position) {
     super(ownerArea, Orientation.RIGHT, position);
-    playerSprite = new Sprite("yellowDot", 1.f, 1.f, this);
+    playerSprite = new Sprite("ghost.1", 1.f, 1.f, this);
   }
 
   @Override
@@ -68,8 +67,7 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public List<DiscreteCoordinates> getCurrentCells() {
-    // TODO Auto-generated method stub
-    return null;
+    return Collections.singletonList(getCurrentMainCellCoordinates());
   }
 
   @Override
