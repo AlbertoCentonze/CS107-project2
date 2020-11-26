@@ -47,8 +47,9 @@ public class SuperPacmanBehavior extends AreaBehavior {
     int width = getWidth();
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        SuperPacmanCellType color = SuperPacmanCellType.toType(getRGB(height - 1 - y, x));
-        setCell(x, y, new SuperPacmanCell(x, y, color));
+        int translatedY = height - 1 - y;
+        SuperPacmanCellType type = SuperPacmanCellType.toType(getRGB(translatedY, x));
+        setCell(x, translatedY, new SuperPacmanCell(x, y, type));
       }
     }
   }
@@ -75,22 +76,19 @@ public class SuperPacmanBehavior extends AreaBehavior {
     int height = getHeight();
     int width = getWidth();
     boolean[][] neighbours = new boolean[3][3];
-    neighbours[1][1] = true;
 
-    for (int xOffset = -1; xOffset < 2; ++xOffset) {
-      for (int yOffset = -1; yOffset < 2; ++yOffset) { // TODO checks if it loops correctly
+    for (int yOffset = -1; yOffset < 2; ++yOffset) { // TODO checks if it loops correctly
+      for (int xOffset = -1; xOffset < 2; ++xOffset) {
         DiscreteCoordinates currentNeighbour = new DiscreteCoordinates(point.x + xOffset, point.y + yOffset);
         // TODO do you need to be so carefull?
-        if (currentNeighbour.x == 0 && currentNeighbour.y == 0)
-          continue;
-        if (currentNeighbour.x <= 0 || currentNeighbour.y <= 0 || currentNeighbour.x >= width
+        if (currentNeighbour.x < 0 || currentNeighbour.y < 0 || currentNeighbour.x >= width
             || currentNeighbour.y >= height)
           continue;
         SuperPacmanCell cell = (SuperPacmanCell) getCell(currentNeighbour.x, currentNeighbour.y);
         SuperPacmanCellType type = cell.getType();
         boolean check = cell.getType() == SuperPacmanCellType.WALL;
         if (cell.getType() == SuperPacmanCellType.WALL)
-          neighbours[xOffset + 1][yOffset + 1] = true;
+          neighbours[yOffset + 1][xOffset + 1] = true;
       }
     }
     return neighbours;
