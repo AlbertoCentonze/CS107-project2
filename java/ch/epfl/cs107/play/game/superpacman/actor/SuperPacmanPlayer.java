@@ -33,7 +33,6 @@ public class SuperPacmanPlayer extends Player {
   }
 
   private List<DiscreteCoordinates> getNeighbourPosition() {
-    List<DiscreteCoordinates> result;
     Vector resultVector;
     Vector orientationVector;
 
@@ -59,7 +58,7 @@ public class SuperPacmanPlayer extends Player {
     resultVector = getPosition().add(orientationVector);
 
     return new ArrayList<DiscreteCoordinates>(
-        Arrays.asList(new DiscreteCoordinates((int) orientationVector.x, (int) orientationVector.y)));
+        Arrays.asList(new DiscreteCoordinates((int) resultVector.x, (int) resultVector.y)));
   }
 
   @Override
@@ -67,6 +66,7 @@ public class SuperPacmanPlayer extends Player {
     Area playerArea = getOwnerArea();
     Keyboard keyboard = playerArea.getKeyboard();
     boolean canGoForward = playerArea.canEnterAreaCells(this, getNeighbourPosition());
+    System.out.println(canGoForward);
 
     if (!isDisplacementOccurs()) {
       // Listen for directions
@@ -117,7 +117,7 @@ public class SuperPacmanPlayer extends Player {
   @Override
   public boolean wantsCellInteraction() {
     // TODO Auto-generated method stub
-    return false;
+    return true;
   }
 
   @Override
@@ -134,8 +134,7 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public boolean takeCellSpace() {
-    // TODO Auto-generated method stub
-    return false;
+    return true;
   }
 
   @Override
@@ -152,70 +151,24 @@ public class SuperPacmanPlayer extends Player {
   public void acceptInteraction(AreaInteractionVisitor v) {
   }
 
-  // private float hp;
-  // private TextGraphics message;
-  // private Sprite sprite;
-  ///// Animation duration in frame number
-
-  // public SuperPacmanPlayer(Area owner, Orientation orientation,
-  // DiscreteCoordinates coordinates, String spriteName) {
-  // super(owner, orientation, coordinates);
-  // this.hp = 10;
-  // message = new TextGraphics(Integer.toString((int) hp), 0.4f, Color.BLUE);
-  // message.setParent(this);
-  // message.setAnchor(new Vector(-0.3f, 0.1f));
-  // sprite = new Sprite(spriteName, 1.f, 1.f, this);
-  //
-  // resetMotion();
-  // }
-  //
-
-  //
-  /// **
-  // * Leave an area by unregister this player
-  // */
-  // public void leaveArea() {
-  // getOwnerArea().unregisterActor(this);
-  // }
-  //
-  /// **
-  // *
-  // * @param area (Area): initial area, not null
-  // * @param position (DiscreteCoordinates): initial position, not null
-  // */
-  // public void enterArea(Area area, DiscreteCoordinates position) {
-  // area.registerActor(this);
-  // area.setViewCandidate(this);
-  // setOwnerArea(area);
-  // setCurrentPosition(position.toVector());
-  // resetMotion();
-  // }
-  //
-
-  //
-  // public boolean isWeak() {
-  // return (hp <= 0.f);
-  // }
-  //
-  // public void strengthen() {
-  // hp = 10;
-  // }
-  //
-  //// Player implements Interactable
-  //
-  // @Override
-  // public boolean takeCellSpace() {
-  // return true;
-  // }
-  //
-  // @Override
-  // public boolean isCellInteractable() {
-  // return true;
-  // }
-  //
-  // @Override
-  // public boolean isViewInteractable() {
-  // return true;
-  // }
-  //
 }
+/// **
+// * Leave an area by unregister this player
+// */
+// public void leaveArea() {
+// getOwnerArea().unregisterActor(this);
+// }
+//
+/// **
+// *
+// * @param area (Area): initial area, not null
+// * @param position (DiscreteCoordinates): initial position, not null
+// */
+// public void enterArea(Area area, DiscreteCoordinates position) {
+// area.registerActor(this);
+// area.setViewCandidate(this);
+// setOwnerArea(area);
+// setCurrentPosition(position.toVector());
+// resetMotion();
+// }
+//
