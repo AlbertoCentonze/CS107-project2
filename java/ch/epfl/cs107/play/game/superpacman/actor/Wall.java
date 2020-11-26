@@ -187,6 +187,4 @@ public class Wall extends AreaEntity{
 		if(sprite != null)
 			sprite.draw(canvas);
 	}
-
-  }
 }
