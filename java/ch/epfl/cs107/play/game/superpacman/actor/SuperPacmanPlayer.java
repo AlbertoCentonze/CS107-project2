@@ -6,10 +6,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
-import ch.epfl.cs107.play.game.areagame.actor.MovableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
@@ -75,8 +73,10 @@ public class SuperPacmanPlayer extends Player {
       moveOrientate(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
       moveOrientate(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
 
-      // Move the player according to the current orientation
-      move(ANIMATION_DURATION);
+      if (canGoForward) {
+        // Move the player according to the current orientation
+        move(ANIMATION_DURATION);
+      }
     }
 
     super.update(deltaTime);

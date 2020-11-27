@@ -1,6 +1,7 @@
 package ch.epfl.cs107.play.game.superpacman;
 
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.game.areagame.actor.Animation;
 import ch.epfl.cs107.play.game.rpg.RPG;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
@@ -16,8 +17,9 @@ public class SuperPacman extends RPG {
   public final static float STEP = 0.05f;
 
   private Player player;
+
   // TODO maybe we could create a level structure class
-  private final String[] areas = { "superpacman/Level0", "superpacman/Level0", "superpacman/Level2" };
+  private final String[] areas = { "superpacman/Level0", "superpacman/Level1", "superpacman/Level2" };
   public static final DiscreteCoordinates[] PLAYER_SPAWN_COORDINATES = { new DiscreteCoordinates(5, 1),
       new DiscreteCoordinates(15, 6), new DiscreteCoordinates(15, 29) };
   private int areaIndex;
