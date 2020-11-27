@@ -12,8 +12,11 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
+import ch.epfl.cs107.play.game.rpg.actor.Sign;
+import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
@@ -28,11 +31,13 @@ public class SuperPacmanPlayer extends Player {
   private Sprite[][] spriteSheets = new Sprite[4][4];
   private Animation[] pacmanAnimations = new Animation[4];
 
+  private SuperPacmanPlayerHandler handler = new SuperPacmanPlayerHandler();
+
   public SuperPacmanPlayer(Area ownerArea, DiscreteCoordinates position) {
     super(ownerArea, Orientation.RIGHT, position);
     spriteSheets = RPGSprite.extractSprites("superpacman/pacman", 4, 1.f, 1.f, this, 64, 64,
         new Orientation[] { Orientation.DOWN, Orientation.LEFT, Orientation.UP, Orientation.RIGHT });
-    pacmanAnimations = Animation.createAnimations(6, spriteSheets);
+    pacmanAnimations = Animation.createAnimations(3, spriteSheets);
     resetMotion();
   }
 
@@ -157,8 +162,7 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public void interactWith(Interactable other) {
-    // TODO Auto-generated method stub
-
+    other.acceptInteraction(handler);
   }
 
   @Override
@@ -178,26 +182,22 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public void acceptInteraction(AreaInteractionVisitor v) {
+    ((SuperPacmanInteractionVisitor) v).interactWith(this);
   }
 
+  private class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
+    @Override
+    public void interactWith(SuperPacmanPlayer player) {
+    }
+
+    @Override
+    public void interactWith(Door door) {
+      setIsPassingADoor(door);
+    }
+
+    @Override
+    public void interactWith(Sign sign) {
+    }
+
+  }
 }
-/// **
-// * Leave an area by unregister this player
-// */
-// public void leaveArea() {
-// getOwnerArea().unregisterActor(this);
-// }
-//
-/// **
-// *
-// * @param area (Area): initial area, not null
-// * @param position (DiscreteCoordinates): initial position, not null
-// */
-// public void enterArea(Area area, DiscreteCoordinates position) {
-// area.registerActor(this);
-// area.setViewCandidate(this);
-// setOwnerArea(area);
-// setCurrentPosition(position.toVector());
-// resetMotion();
-// }
-//
