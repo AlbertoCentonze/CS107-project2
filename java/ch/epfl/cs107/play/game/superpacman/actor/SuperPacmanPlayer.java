@@ -7,12 +7,15 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.game.areagame.actor.Animation;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
+import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
@@ -21,12 +24,15 @@ import ch.epfl.cs107.play.window.Keyboard;
 public class SuperPacmanPlayer extends Player {
   private final static int ANIMATION_DURATION = 6;
 
-  private Sprite playerSprite;
+  // TODO Maybe create a spritesheet class?
+  private Sprite[][] spriteSheets = new Sprite[4][4];
+  private Animation[] pacmanAnimations = new Animation[4];
 
   public SuperPacmanPlayer(Area ownerArea, DiscreteCoordinates position) {
     super(ownerArea, Orientation.RIGHT, position);
-    playerSprite = new Sprite("ghost.1", 1.f, 1.f, this);
-
+    spriteSheets = RPGSprite.extractSprites("superpacman/pacman", 4, 1.f, 1.f, this, 64, 64,
+        new Orientation[] { Orientation.DOWN, Orientation.LEFT, Orientation.UP, Orientation.RIGHT });
+    pacmanAnimations = Animation.createAnimations(6, spriteSheets);
     resetMotion();
   }
 
@@ -64,7 +70,6 @@ public class SuperPacmanPlayer extends Player {
     Area playerArea = getOwnerArea();
     Keyboard keyboard = playerArea.getKeyboard();
     boolean canGoForward = playerArea.canEnterAreaCells(this, getNeighbourPosition());
-    System.out.println(canGoForward);
 
     if (!isDisplacementOccurs()) {
       // Listen for directions
@@ -76,7 +81,14 @@ public class SuperPacmanPlayer extends Player {
       if (canGoForward) {
         // Move the player according to the current orientation
         move(ANIMATION_DURATION);
+      } else {
+        for (Animation anim : pacmanAnimations) {
+          anim.reset();
+        }
       }
+    }
+    for (Animation anim : pacmanAnimations) {
+      anim.update(deltaTime);
     }
 
     super.update(deltaTime);
@@ -100,7 +112,24 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public void draw(Canvas canvas) {
-    playerSprite.draw(canvas);
+    switch (getOrientation()) {
+      case DOWN:
+        pacmanAnimations[2].draw(canvas);
+        break;
+      case LEFT:
+        pacmanAnimations[3].draw(canvas);
+        break;
+      case RIGHT:
+        pacmanAnimations[1].draw(canvas);
+        break;
+      case UP:
+        pacmanAnimations[0].draw(canvas);
+        break;
+      default:
+        pacmanAnimations[0].draw(canvas);
+        break;
+
+    }
   }
 
   @Override
