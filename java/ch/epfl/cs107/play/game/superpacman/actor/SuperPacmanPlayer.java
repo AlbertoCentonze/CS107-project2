@@ -26,12 +26,17 @@ import ch.epfl.cs107.play.window.Keyboard;
 
 public class SuperPacmanPlayer extends Player {
   private final static int ANIMATION_DURATION = 6;
+  private int score = 0;
+  public final static int MAX_LIFE = 5;
+  private int life = 3;
 
   // TODO Maybe create a spritesheet class?
   private Sprite[][] spriteSheets = new Sprite[4][4];
   private Animation[] pacmanAnimations = new Animation[4];
 
   private SuperPacmanPlayerHandler handler = new SuperPacmanPlayerHandler();
+
+  private SuperPacmanStatusGUI hud = new SuperPacmanStatusGUI();
 
   public SuperPacmanPlayer(Area ownerArea, DiscreteCoordinates position) {
     super(ownerArea, Orientation.RIGHT, position);
@@ -96,6 +101,9 @@ public class SuperPacmanPlayer extends Player {
       anim.update(deltaTime);
     }
 
+    hud.setLife(10);
+    hud.setScore(42);
+
     super.update(deltaTime);
 
   }
@@ -117,6 +125,8 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public void draw(Canvas canvas) {
+    hud.draw(canvas);
+
     switch (getOrientation()) {
       case DOWN:
         pacmanAnimations[2].draw(canvas);
@@ -133,7 +143,6 @@ public class SuperPacmanPlayer extends Player {
       default:
         pacmanAnimations[0].draw(canvas);
         break;
-
     }
   }
 
