@@ -4,6 +4,9 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.superpacman.actor.Bonus;
+import ch.epfl.cs107.play.game.superpacman.actor.Cherry;
+import ch.epfl.cs107.play.game.superpacman.actor.Diamond;
 import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 import ch.epfl.cs107.play.game.superpacman.actor.Wall;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -61,13 +64,33 @@ public class SuperPacmanBehavior extends AreaBehavior {
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         int translatedY = height - 1 - y;
-        SuperPacmanCell currentCell = (SuperPacmanCell) getCell(x, translatedY);
-        if (currentCell.getType() == SuperPacmanCellType.WALL) {
-          DiscreteCoordinates currentPosition = new DiscreteCoordinates(x, translatedY);
+        DiscreteCoordinates currentPosition = new DiscreteCoordinates(x, translatedY);
+        SuperPacmanCell currentCell = (SuperPacmanCell) getCell(currentPosition.x, currentPosition.y);
+        switch (currentCell.getType()) {
+          case WALL:
+            boolean[][] neighbours = getNeighbours(currentPosition);
+            area.registerActor(new Wall(area, currentPosition, neighbours));
+            break;
+          case FREE_WITH_DIAMOND:
+            area.registerActor(new Diamond(area, currentPosition));
+            break;
+          case FREE_WITH_BONUS:
+            area.registerActor(new Bonus(area, currentPosition));
+            break;
+          case FREE_WITH_CHERRY:
+            area.registerActor(new Cherry(area, currentPosition));
+            break;
+          case FREE_WITH_BLINKY:
+            break;
+          case FREE_WITH_INKY:
+            break;
+          case FREE_WITH_PINKY:
+            break;
+          case FREE_EMPTY:
+          case NONE:
+          default:
+            break;
 
-          boolean[][] neighbours = getNeighbours(currentPosition);
-
-          area.registerActor(new Wall(area, currentPosition, neighbours));
         }
       }
     }

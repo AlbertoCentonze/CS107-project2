@@ -8,11 +8,10 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class CollectableAreaEntity extends AreaEntity {
+abstract public class CollectableAreaEntity extends AreaEntity {
 
-  public CollectableAreaEntity(Area area, DiscreteCoordinates position, String spriteName) {
-    // super(area, Orientation.DOWN, position);
-    // TODO Auto-generated constructor stub
+  public CollectableAreaEntity(Area area, DiscreteCoordinates position) {
+    super(area, Orientation.DOWN, position);
   }
 
   @Override
@@ -40,11 +39,4 @@ public class CollectableAreaEntity extends AreaEntity {
     // TODO Auto-generated method stub
 
   }
-
-  @Override
-  public void draw(Canvas canvas) {
-    // TODO Auto-generated method stub
-
-  }
-
 }
