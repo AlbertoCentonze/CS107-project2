@@ -101,8 +101,8 @@ public class SuperPacmanPlayer extends Player {
       anim.update(deltaTime);
     }
 
-    hud.setLife(10);
-    hud.setScore(42);
+    score += 100;
+    hud.setGUI(life, score);
 
     super.update(deltaTime);
 

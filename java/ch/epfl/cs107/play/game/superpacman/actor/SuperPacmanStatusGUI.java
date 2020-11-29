@@ -13,41 +13,36 @@ import ch.epfl.cs107.play.window.Canvas;
 public class SuperPacmanStatusGUI implements Graphics { // TODO updatable?
   ImageGraphics[] lifeGraphics = new ImageGraphics[5];
   TextGraphics scoreGraphics;
-  private final static int DEPTH = 5;
+  private final static int DEPTH = 0;
 
-  private int currentLife = 3;
-  private int score = 0;
-
-  private float width;
-  private float height;
-  private Vector anchor;
+  private int currentLife;
+  private int score;
 
   protected SuperPacmanStatusGUI() {
   }
 
-  public void setLife(int currentLife) {
+  public void setGUI(int currentLife, int score) {
     this.currentLife = currentLife;
-  }
-
-  public void setScore(int score) {
     this.score = score;
   }
 
   @Override
   public void draw(Canvas canvas) {
-    width = canvas.getScaledWidth();
-    height = canvas.getScaledHeight();
-    anchor = canvas.getTransform().getOrigin().sub(new Vector(width / 2, height / 2));
+    float width = canvas.getScaledWidth();
+    float height = canvas.getScaledHeight();
+    Vector anchor = canvas.getTransform().getOrigin().sub(new Vector(width / 2, height / 2));
 
-    scoreGraphics = new TextGraphics(Integer.toString((int) score), 1.f, Color.BLUE);
-    scoreGraphics.setAnchor(anchor);
+    scoreGraphics = new TextGraphics(Integer.toString((int) score), 1.f, Color.YELLOW, Color.BLACK, 0.025f, false,
+        false, anchor);
 
     for (int i = 0; i < SuperPacmanPlayer.MAX_LIFE; ++i) {
       boolean yellow = i < currentLife ? true : false;
       lifeGraphics[i] = new ImageGraphics(ResourcePath.getSprite("superpacman/lifeDisplay"), 1.f, 1.f,
-          new RegionOfInterest(yellow ? 0 : 64, 0, 64, 64), anchor.add(new Vector(i * 50, height - 1.375f)), 1, DEPTH);
-      lifeGraphics[i].draw(canvas);
+          new RegionOfInterest(yellow ? 0 : 64, 0, 64, 64), anchor.add(new Vector(i * 100, height - 1.375f)), 1, DEPTH);
     }
+    for (ImageGraphics life : lifeGraphics)
+      life.draw(canvas);
+
     scoreGraphics.draw(canvas);
   }
 
