@@ -46,32 +46,10 @@ public class SuperPacmanPlayer extends Player {
   }
 
   private List<DiscreteCoordinates> getNeighbourPosition() {
-    Vector resultVector;
-    Vector orientationVector;
-
-    switch (getOrientation()) {
-      case DOWN:
-        orientationVector = new Vector(0, -1);
-        break;
-      case LEFT:
-        orientationVector = new Vector(-1, 0);
-        break;
-      case RIGHT:
-        orientationVector = new Vector(1, 0);
-        break;
-      case UP:
-        orientationVector = new Vector(0, 1);
-        break;
-      default:
-        orientationVector = new Vector(0, 0);
-        break;
-
-    }
-
-    resultVector = getPosition().add(orientationVector);
+    Vector nextCellVector = getPosition().add(getOrientation().toVector());
 
     return new ArrayList<DiscreteCoordinates>(
-        Arrays.asList(new DiscreteCoordinates((int) resultVector.x, (int) resultVector.y)));
+        Arrays.asList(new DiscreteCoordinates((int) nextCellVector.x, (int) nextCellVector.y)));
   }
 
   @Override

@@ -5,8 +5,8 @@ import ch.epfl.cs107.play.game.areagame.actor.Animation;
 import ch.epfl.cs107.play.game.areagame.actor.CollectableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 
@@ -16,10 +16,7 @@ public class Bonus extends CollectableAreaEntity {
 
   public Bonus(Area area, DiscreteCoordinates position) {
     super(area, position);
-    for (int frame = 0; frame < bonusSpritesheet.length; ++frame) {
-      bonusSpritesheet[frame] = new Sprite("superpacman/Coin", 1.f, 1.f, this,
-          new RegionOfInterest(frame * 16, 0, 16, 16));
-    }
+    bonusSpritesheet = RPGSprite.extractSprites("superpacman/coin", 4, 1.f, 1.f, this, 16, 16);
     bonusAnimation = new Animation(6, bonusSpritesheet);
   }
 
