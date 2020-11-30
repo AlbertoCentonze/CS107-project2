@@ -7,7 +7,6 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.superpacman.actor.Bonus;
 import ch.epfl.cs107.play.game.superpacman.actor.Cherry;
 import ch.epfl.cs107.play.game.superpacman.actor.Diamond;
-import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 import ch.epfl.cs107.play.game.superpacman.actor.Wall;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
