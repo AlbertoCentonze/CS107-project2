@@ -78,6 +78,7 @@ public class SuperPacmanPlayer extends Player {
       anim.update(deltaTime);
     }
 
+    // TODO life oscillates if invincible
     hud.setGUI(life, score);
 
     super.update(deltaTime);

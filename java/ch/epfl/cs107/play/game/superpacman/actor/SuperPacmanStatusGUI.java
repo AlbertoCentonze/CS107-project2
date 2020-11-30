@@ -38,7 +38,7 @@ public class SuperPacmanStatusGUI implements Graphics { // TODO updatable?
     for (int i = 0; i < SuperPacmanPlayer.MAX_LIFE; ++i) {
       boolean yellow = i < currentLife ? true : false;
       lifeGraphics[i] = new ImageGraphics(ResourcePath.getSprite("superpacman/lifeDisplay"), 1.f, 1.f,
-          new RegionOfInterest(yellow ? 0 : 64, 0, 64, 64), anchor.add(new Vector(i * 100, height - 1.375f)), 1, DEPTH);
+          new RegionOfInterest(yellow ? 0 : 64, 0, 64, 64), anchor.add(new Vector(i, height - 1.375f)), 1, DEPTH);
     }
     for (ImageGraphics life : lifeGraphics)
       life.draw(canvas);
