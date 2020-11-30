@@ -6,7 +6,6 @@ import java.util.List;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.window.Canvas;
 
 abstract public class CollectableAreaEntity extends AreaEntity {
 
@@ -36,7 +35,6 @@ abstract public class CollectableAreaEntity extends AreaEntity {
 
   @Override
   public void acceptInteraction(AreaInteractionVisitor v) {
-    // TODO Auto-generated method stub
-
+    getOwnerArea().unregisterActor(this);
   }
 }

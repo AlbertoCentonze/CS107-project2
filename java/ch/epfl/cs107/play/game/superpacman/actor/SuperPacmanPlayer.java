@@ -100,7 +100,6 @@ public class SuperPacmanPlayer extends Player {
       anim.update(deltaTime);
     }
 
-    score += 100;
     hud.setGUI(life, score);
 
     super.update(deltaTime);
@@ -205,6 +204,8 @@ public class SuperPacmanPlayer extends Player {
 
     @Override
     public void interactWith(Diamond diamond) {
+      System.out.println("Mangiando...");
+      score += Diamond.VALUE;
     }
 
   }
