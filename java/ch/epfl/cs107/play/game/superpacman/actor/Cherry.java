@@ -3,10 +3,13 @@ package ch.epfl.cs107.play.game.superpacman.actor;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.CollectableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
+import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 
 public class Cherry extends CollectableAreaEntity {
+  public static final int VALUE = 200;
   Sprite cherrySprite;
 
   public Cherry(Area area, DiscreteCoordinates position) {
@@ -19,4 +22,9 @@ public class Cherry extends CollectableAreaEntity {
     cherrySprite.draw(canvas);
   }
 
+  @Override
+  public void acceptInteraction(AreaInteractionVisitor v) {
+    ((SuperPacmanInteractionVisitor) v).interactWith(this);
+    super.acceptInteraction(v);
+  }
 }

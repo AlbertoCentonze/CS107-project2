@@ -4,9 +4,11 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Animation;
 import ch.epfl.cs107.play.game.areagame.actor.CollectableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.window.Canvas;
+import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 
 public class Bonus extends CollectableAreaEntity {
   Sprite[] bonusSpritesheet = new Sprite[4];
@@ -30,5 +32,11 @@ public class Bonus extends CollectableAreaEntity {
   @Override
   public void draw(Canvas canvas) {
     bonusAnimation.draw(canvas);
+  }
+
+  @Override
+  public void acceptInteraction(AreaInteractionVisitor v) {
+    ((SuperPacmanInteractionVisitor) v).interactWith(this);
+    super.acceptInteraction(v);
   }
 }

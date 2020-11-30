@@ -1,6 +1,5 @@
 package ch.epfl.cs107.play.game.superpacman.actor;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,7 +14,6 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
-import ch.epfl.cs107.play.game.rpg.actor.Sign;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Vector;
@@ -25,9 +23,11 @@ import ch.epfl.cs107.play.window.Keyboard;
 
 public class SuperPacmanPlayer extends Player {
   private final static int ANIMATION_DURATION = 6;
-  private int score = 0;
   public final static int MAX_LIFE = 5;
+
+  private int score = 0;
   private int life = 3;
+  private boolean isInvincible = false;
 
   // TODO Maybe create a spritesheet class?
   private Sprite[][] spriteSheets = new Sprite[4][4];
@@ -204,8 +204,25 @@ public class SuperPacmanPlayer extends Player {
 
     @Override
     public void interactWith(Diamond diamond) {
-      System.out.println("Mangiando...");
       score += Diamond.VALUE;
+    }
+
+    @Override
+    public void interactWith(Cherry cherry) {
+      score += Cherry.VALUE;
+      System.out.println("cherry");
+    }
+
+    @Override
+    public void interactWith(Bonus bonus) {
+      // TODO
+      System.out.println("bonus");
+    }
+
+    @Override
+    public void interactWith(Key key) {
+      // TODO
+      System.out.println("key");
     }
 
   }
