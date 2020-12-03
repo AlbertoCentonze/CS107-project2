@@ -33,7 +33,7 @@ public class Gate extends AreaEntity {
 
   @Override
   public boolean takeCellSpace() {
-    return true;
+    return false; // TODO bring it back to true
   }
 
   @Override

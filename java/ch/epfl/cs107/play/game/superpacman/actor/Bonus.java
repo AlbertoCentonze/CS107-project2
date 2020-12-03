@@ -11,6 +11,8 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 
 public class Bonus extends CollectableAreaEntity {
+  final static int BONUS_DURATION = 10;
+
   Sprite[] bonusSpritesheet = new Sprite[4];
   Animation bonusAnimation;
 

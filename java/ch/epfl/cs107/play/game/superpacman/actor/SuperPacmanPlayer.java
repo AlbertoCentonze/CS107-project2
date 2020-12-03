@@ -1,7 +1,5 @@
 package ch.epfl.cs107.play.game.superpacman.actor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,19 +20,19 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 public class SuperPacmanPlayer extends Player {
+  // TODO Maybe create a spritesheet class?
+  private Sprite[][] spriteSheets = new Sprite[4][4];
+  private Animation[] pacmanAnimations = new Animation[4];
+
   private final static int ANIMATION_DURATION = 6;
   public final static int MAX_LIFE = 5;
 
   private int score = 0;
   private int life = 3;
-  private boolean isInvincible = false;
 
-  // TODO Maybe create a spritesheet class?
-  private Sprite[][] spriteSheets = new Sprite[4][4];
-  private Animation[] pacmanAnimations = new Animation[4];
+  public boolean vulnerable = true;
 
   private SuperPacmanPlayerHandler handler = new SuperPacmanPlayerHandler();
-
   private SuperPacmanStatusGUI hud = new SuperPacmanStatusGUI();
 
   public SuperPacmanPlayer(Area ownerArea, DiscreteCoordinates position) {
@@ -45,18 +43,11 @@ public class SuperPacmanPlayer extends Player {
     resetMotion();
   }
 
-  private List<DiscreteCoordinates> getNeighbourPosition() {
-    Vector nextCellVector = getPosition().add(getOrientation().toVector());
-
-    return new ArrayList<DiscreteCoordinates>(
-        Arrays.asList(new DiscreteCoordinates((int) nextCellVector.x, (int) nextCellVector.y)));
-  }
-
   @Override
   public void update(float deltaTime) {
     Area playerArea = getOwnerArea();
     Keyboard keyboard = playerArea.getKeyboard();
-    boolean canGoForward = playerArea.canEnterAreaCells(this, getNeighbourPosition());
+    boolean canGoForward = playerArea.canEnterAreaCells(this, getNextCurrentCells());
 
     if (!isDisplacementOccurs()) {
       // Listen for directions
@@ -123,6 +114,12 @@ public class SuperPacmanPlayer extends Player {
     }
   }
 
+  public void loseLife() {
+    // TODO
+    life -= 1;
+    setCurrentPosition(new Vector(0, 0));
+  }
+
   @Override
   public List<DiscreteCoordinates> getCurrentCells() {
     return Collections.singletonList(getCurrentMainCellCoordinates());
@@ -130,7 +127,7 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public List<DiscreteCoordinates> getFieldOfViewCells() {
-    // TODO Auto-generated method stub
+    // TODO probably going to need it
     return null;
   }
 
@@ -194,7 +191,8 @@ public class SuperPacmanPlayer extends Player {
 
     @Override
     public void interactWith(Bonus bonus) {
-      // TODO
+      vulnerable = false;
+      // TODO timer
       System.out.println("bonus");
     }
 
@@ -204,5 +202,14 @@ public class SuperPacmanPlayer extends Player {
       System.out.println("key");
     }
 
+    public void interactWith(Ghost ghost) {
+      if (vulnerable) {
+        loseLife();
+      } else {
+        score += Ghost.GHOST_SCORE;
+        ghost.respawn();
+      }
+    }
   }
+
 }
