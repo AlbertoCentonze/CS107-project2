@@ -4,9 +4,9 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-public class Blinky extends Ghost {
+public class Inky extends Ghost {
 
-  public Blinky(Area area, Orientation orientation, DiscreteCoordinates position, DiscreteCoordinates respawnPoint) {
+  public Inky(Area area, Orientation orientation, DiscreteCoordinates position, DiscreteCoordinates respawnPoint) {
     super(area, orientation, position, respawnPoint, "inky");
   }
 
