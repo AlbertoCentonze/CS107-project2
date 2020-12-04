@@ -8,6 +8,8 @@ import ch.epfl.cs107.play.game.superpacman.actor.Blinky;
 import ch.epfl.cs107.play.game.superpacman.actor.Bonus;
 import ch.epfl.cs107.play.game.superpacman.actor.Cherry;
 import ch.epfl.cs107.play.game.superpacman.actor.Diamond;
+import ch.epfl.cs107.play.game.superpacman.actor.Inky;
+import ch.epfl.cs107.play.game.superpacman.actor.Pinky;
 import ch.epfl.cs107.play.game.superpacman.actor.Wall;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
@@ -81,11 +83,13 @@ public class SuperPacmanBehavior extends AreaBehavior {
             area.registerActor(new Cherry(area, currentPosition));
             break;
           case FREE_WITH_BLINKY:
-            area.registerActor(new Blinky(area, currentPosition, currentPosition));
+            area.registerActor(new Blinky(area, currentPosition));
             break;
           case FREE_WITH_INKY:
+            area.registerActor(new Inky(area, currentPosition));
             break;
           case FREE_WITH_PINKY:
+            area.registerActor(new Pinky(area, currentPosition));
             break;
           case FREE_EMPTY:
           case NONE:

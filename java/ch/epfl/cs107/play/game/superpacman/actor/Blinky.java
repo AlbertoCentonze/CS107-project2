@@ -7,9 +7,20 @@ import ch.epfl.cs107.play.math.RandomGenerator;
 
 public class Blinky extends Ghost {
   private static final int MAX = 4;
+  private int frameCounter = 0;
 
-  public Blinky(Area area, DiscreteCoordinates position, DiscreteCoordinates respawnPoint) {
-    super(area, position, respawnPoint, "blinky");
+  public Blinky(Area area, DiscreteCoordinates position) {
+    super(area, position, "blinky");
+  }
+
+  @Override
+  public void update(float deltaTime) {
+    super.update(deltaTime);
+
+    ++frameCounter;
+    if (frameCounter % GHOST_SPEED == 0)
+      orientate(getNextOrientation());
+
   }
 
   @Override

@@ -6,8 +6,8 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Pinky extends Ghost {
 
-  public Pinky(Area area, DiscreteCoordinates position, DiscreteCoordinates respawnPoint) {
-    super(area, position, respawnPoint, "pinky");
+  public Pinky(Area area, DiscreteCoordinates position) {
+    super(area, position, "pinky");
   }
 
   @Override

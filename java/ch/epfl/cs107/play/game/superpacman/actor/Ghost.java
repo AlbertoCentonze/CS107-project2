@@ -25,9 +25,9 @@ abstract public class Ghost extends MovableAreaEntity {
   private DiscreteCoordinates respawnPoint;
   private boolean playerMemorized = false;
 
-  public Ghost(Area area, DiscreteCoordinates position, DiscreteCoordinates respawnPoint, String ghostType) {
+  public Ghost(Area area, DiscreteCoordinates position, String ghostType) {
     super(area, Orientation.UP, position);
-    this.respawnPoint = respawnPoint;
+    this.respawnPoint = position;
 
     Sprite[] ghostSpritesheet = RPGSprite.extractSprites("superpacman/ghost." + ghostType, 2, 1.f, 1.f, this, 16, 16);
     ghostAnimation = new Animation(3, ghostSpritesheet);
@@ -42,7 +42,6 @@ abstract public class Ghost extends MovableAreaEntity {
   public void update(float deltaTime) {
     super.update(deltaTime);
 
-    // TODO update invulnerability timer
     move(GHOST_SPEED);
 
     if (getIsAfraid())
