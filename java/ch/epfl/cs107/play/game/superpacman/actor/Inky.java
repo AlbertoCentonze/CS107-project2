@@ -6,8 +6,8 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Inky extends Ghost {
 
-  public Inky(Area area, Orientation orientation, DiscreteCoordinates position, DiscreteCoordinates respawnPoint) {
-    super(area, orientation, position, respawnPoint, "inky");
+  public Inky(Area area, DiscreteCoordinates position, DiscreteCoordinates respawnPoint) {
+    super(area, position, respawnPoint, "inky");
   }
 
   @Override

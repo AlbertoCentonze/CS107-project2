@@ -24,13 +24,15 @@ public class SuperPacmanPlayer extends Player {
   private Sprite[][] spriteSheets = new Sprite[4][4];
   private Animation[] pacmanAnimations = new Animation[4];
 
-  private final static int ANIMATION_DURATION = 6;
+  private final static int ANIMATION_DURATION = 1; // TODO back to 6
+  private final static int BONUS_DURAION = 10;
   public final static int MAX_LIFE = 5;
 
   private int score = 0;
   private int life = 3;
 
-  public boolean vulnerable = true;
+  public boolean isInvulnerable = false;
+  public float bonusTimer;
 
   private SuperPacmanPlayerHandler handler = new SuperPacmanPlayerHandler();
   private SuperPacmanStatusGUI hud = new SuperPacmanStatusGUI();
@@ -71,6 +73,11 @@ public class SuperPacmanPlayer extends Player {
 
     // TODO life oscillates if invincible
     hud.setGUI(life, score);
+
+    if (bonusTimer >= 0)
+      bonusTimer -= deltaTime;
+    else
+      isInvulnerable = false;
 
     super.update(deltaTime);
 
@@ -118,6 +125,10 @@ public class SuperPacmanPlayer extends Player {
     // TODO
     life -= 1;
     setCurrentPosition(new Vector(0, 0));
+  }
+
+  public boolean getIsInvulnerable() {
+    return isInvulnerable;
   }
 
   @Override
@@ -191,23 +202,21 @@ public class SuperPacmanPlayer extends Player {
 
     @Override
     public void interactWith(Bonus bonus) {
-      vulnerable = false;
-      // TODO timer
-      System.out.println("bonus");
+      isInvulnerable = true;
+      bonusTimer = BONUS_DURAION;
     }
 
     @Override
     public void interactWith(Key key) {
-      // TODO
-      System.out.println("key");
+      // TODO use signals in areagraph
     }
 
     public void interactWith(Ghost ghost) {
-      if (vulnerable) {
-        loseLife();
-      } else {
+      if (isInvulnerable) {
         score += Ghost.GHOST_SCORE;
         ghost.respawn();
+      } else {
+        loseLife();
       }
     }
   }

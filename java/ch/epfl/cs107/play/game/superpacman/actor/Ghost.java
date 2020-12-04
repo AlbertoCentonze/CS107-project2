@@ -12,6 +12,7 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 
 abstract public class Ghost extends MovableAreaEntity {
   final static int GHOST_SCORE = 500;
@@ -22,12 +23,10 @@ abstract public class Ghost extends MovableAreaEntity {
   private Animation ghostAnimation;
 
   private DiscreteCoordinates respawnPoint;
-  private boolean afraid = false;
   private boolean playerMemorized = false;
 
-  public Ghost(Area area, Orientation orientation, DiscreteCoordinates position, DiscreteCoordinates respawnPoint,
-      String ghostType) {
-    super(area, orientation, position);
+  public Ghost(Area area, DiscreteCoordinates position, DiscreteCoordinates respawnPoint, String ghostType) {
+    super(area, Orientation.UP, position);
     this.respawnPoint = respawnPoint;
 
     Sprite[] ghostSpritesheet = RPGSprite.extractSprites("superpacman/ghost." + ghostType, 2, 1.f, 1.f, this, 16, 16);
@@ -46,7 +45,7 @@ abstract public class Ghost extends MovableAreaEntity {
     // TODO update invulnerability timer
     move(GHOST_SPEED);
 
-    if (afraid)
+    if (getIsAfraid())
       afraidAnimation.update(deltaTime);
     else
       ghostAnimation.update(deltaTime);
@@ -54,10 +53,14 @@ abstract public class Ghost extends MovableAreaEntity {
 
   @Override
   public void draw(Canvas canvas) {
-    if (afraid)
+    if (getIsAfraid())
       afraidAnimation.draw(canvas);
     else
       ghostAnimation.draw(canvas);
+  }
+
+  public boolean getIsAfraid() {
+    return ((SuperPacmanArea) getOwnerArea()).getAreGhostsScared();
   }
 
   public void respawn() {

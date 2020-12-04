@@ -7,8 +7,7 @@ import ch.epfl.cs107.play.window.Window;
 
 abstract public class SuperPacmanArea extends Area {
   private SuperPacmanBehavior behavior;
-
-  public int[] PLAYER_SPAWN_COORDINATES;
+  private boolean areGhostsScared;
 
   /**
    * Create the area by adding it all actors called by begin method Note it set
@@ -33,6 +32,14 @@ abstract public class SuperPacmanArea extends Area {
       return true;
     }
     return false;
+  }
+
+  public void setAreGhostsScared(boolean scared) {
+    areGhostsScared = scared;
+  }
+
+  public boolean getAreGhostsScared() {
+    return areGhostsScared;
   }
 
 }

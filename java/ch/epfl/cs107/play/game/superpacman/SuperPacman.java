@@ -11,12 +11,13 @@ import ch.epfl.cs107.play.game.superpacman.area.Level2;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 
 public class SuperPacman extends RPG {
   public final static float CAMERA_SCALE_FACTOR = 15.f;
   public final static float STEP = 0.05f;
 
-  private Player player;
+  private SuperPacmanPlayer player;
 
   // TODO maybe we could create a level structure class
   private final String[] areas = { "superpacman/Level0", "superpacman/Level1", "superpacman/Level2" };
@@ -50,7 +51,7 @@ public class SuperPacman extends RPG {
   @Override
   public void update(float deltaTime) {
     super.update(deltaTime);
-
+    ((SuperPacmanArea) getCurrentArea()).setAreGhostsScared(player.getIsInvulnerable());
   }
 
   @Override
@@ -62,6 +63,4 @@ public class SuperPacman extends RPG {
     return "Super Pacman";
   }
 
-  // player.leaveArea();
-  // player.enterArea(currentArea, startingPositions[areaIndex]);
 }
