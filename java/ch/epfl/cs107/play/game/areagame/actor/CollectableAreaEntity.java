@@ -8,6 +8,11 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 abstract public class CollectableAreaEntity extends AreaEntity {
+  private boolean isCollected = false;
+
+  public boolean getIsCollected() {
+    return isCollected;
+  }
 
   public CollectableAreaEntity(Area area, DiscreteCoordinates position) {
     super(area, Orientation.DOWN, position);
@@ -35,6 +40,7 @@ abstract public class CollectableAreaEntity extends AreaEntity {
 
   @Override
   public void acceptInteraction(AreaInteractionVisitor v) {
+    isCollected = true;
     getOwnerArea().unregisterActor(this);
   }
 }

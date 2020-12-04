@@ -5,10 +5,11 @@ import ch.epfl.cs107.play.game.areagame.actor.CollectableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 
-public class Key extends CollectableAreaEntity {
+public class Key extends CollectableAreaEntity implements Logic {
   Sprite bonusSprite;
 
   public Key(Area area, DiscreteCoordinates position) {
@@ -25,5 +26,20 @@ public class Key extends CollectableAreaEntity {
   public void acceptInteraction(AreaInteractionVisitor v) {
     ((SuperPacmanInteractionVisitor) v).interactWith(this);
     super.acceptInteraction(v);
+  }
+
+  @Override
+  public boolean isOn() {
+    return getIsCollected();
+  }
+
+  @Override
+  public boolean isOff() {
+    return !getIsCollected();
+  }
+
+  @Override
+  public float getIntensity() {
+    return isOn() ? 1 : 0;
   }
 }
