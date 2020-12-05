@@ -8,11 +8,12 @@ import ch.epfl.cs107.play.window.Window;
 abstract public class SuperPacmanArea extends Area {
   private SuperPacmanBehavior behavior;
   private boolean areGhostsScared;
+  private LevelManager levelStructure;
 
-  /**
-   * Create the area by adding it all actors called by begin method Note it set
-   * the Behavior as needed !
-   */
+  public SuperPacmanArea(LevelManager levels) {
+    this.levelStructure = levels;
+  }
+
   protected void createArea() {
     behavior.registerActors(this);
   };
@@ -40,6 +41,10 @@ abstract public class SuperPacmanArea extends Area {
 
   public boolean getAreGhostsScared() {
     return areGhostsScared;
+  }
+
+  public LevelManager getLevelManager() {
+    return this.levelStructure;
   }
 
 }

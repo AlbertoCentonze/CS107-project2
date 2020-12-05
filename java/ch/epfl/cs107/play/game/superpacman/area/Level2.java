@@ -8,6 +8,10 @@ import ch.epfl.cs107.play.game.superpacman.actor.Gate;
 public class Level2 extends SuperPacmanArea {
   Entity[] entities = new Entity[4];
 
+  public Level2(LevelManager levels) {
+    super(levels);
+  }
+
   @Override
   public String getTitle() {
     return "superpacman/Level2";

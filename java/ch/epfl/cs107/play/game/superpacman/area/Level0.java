@@ -15,6 +15,10 @@ public class Level0 extends SuperPacmanArea {
   Key key;
   Gate[] gates = new Gate[2];
 
+  public Level0(LevelManager levels) {
+    super(levels);
+  }
+
   @Override
   public String getTitle() {
     return "superpacman/Level0";

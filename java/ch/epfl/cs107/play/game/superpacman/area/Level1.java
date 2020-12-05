@@ -13,6 +13,10 @@ public class Level1 extends SuperPacmanArea {
   Door nextLevel;
   Gate[] gates = new Gate[2];
 
+  public Level1(LevelManager levels) {
+    super(levels);
+  }
+
   @Override
   public String getTitle() {
     return "superpacman/Level1";

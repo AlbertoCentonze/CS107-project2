@@ -8,6 +8,7 @@ import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 import ch.epfl.cs107.play.game.superpacman.area.Level0;
 import ch.epfl.cs107.play.game.superpacman.area.Level1;
 import ch.epfl.cs107.play.game.superpacman.area.Level2;
+import ch.epfl.cs107.play.game.superpacman.area.LevelManager;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
@@ -20,28 +21,26 @@ public class SuperPacman extends RPG {
   private SuperPacmanPlayer player;
 
   // TODO maybe we could create a level structure class
-  private final String[] areas = { "superpacman/Level0", "superpacman/Level1", "superpacman/Level2" };
-  public static final DiscreteCoordinates[] PLAYER_SPAWN_COORDINATES = { new DiscreteCoordinates(5, 1),
-      new DiscreteCoordinates(15, 6), new DiscreteCoordinates(15, 29) };
-  private int areaIndex;
+  LevelManager levels = new LevelManager(
+      new String[] { "superpacman/Level0", "superpacman/Level1", "superpacman/Level2" }, new DiscreteCoordinates[] {
+          new DiscreteCoordinates(5, 1), new DiscreteCoordinates(15, 6), new DiscreteCoordinates(15, 29) });
 
   /**
    * Add all the areas
    */
   private void createAreas() {
-    addArea(new Level0());
-    addArea(new Level1());
-    addArea(new Level2());
+    addArea(new Level0(levels));
+    addArea(new Level1(levels));
+    addArea(new Level2(levels));
   }
 
   @Override
   public boolean begin(Window window, FileSystem fileSystem) {
 
     if (super.begin(window, fileSystem)) {
-      areaIndex = 0;
       createAreas();
-      Area area = setCurrentArea(areas[areaIndex], true);
-      player = new SuperPacmanPlayer(area, PLAYER_SPAWN_COORDINATES[areaIndex]);
+      Area area = setCurrentArea(levels.getLevelName(0), true);
+      player = new SuperPacmanPlayer(area, levels.getLevelSpawnCoordinates(0));
       initPlayer(player);
       return true;
     }
