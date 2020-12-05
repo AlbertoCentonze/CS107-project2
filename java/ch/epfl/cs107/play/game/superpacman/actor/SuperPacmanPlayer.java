@@ -30,8 +30,9 @@ public class SuperPacmanPlayer extends Player {
 
   private int score = 0;
   private int life = 3;
+  private int collectedDiamonds = 0;
 
-  public boolean isInvulnerable = false;
+  public boolean invulnerable = false;
   public float bonusTimer;
 
   private SuperPacmanPlayerHandler handler = new SuperPacmanPlayerHandler();
@@ -77,7 +78,7 @@ public class SuperPacmanPlayer extends Player {
     if (bonusTimer >= 0)
       bonusTimer -= deltaTime;
     else
-      isInvulnerable = false;
+      invulnerable = false;
 
     super.update(deltaTime);
 
@@ -122,13 +123,12 @@ public class SuperPacmanPlayer extends Player {
   }
 
   public void loseLife() {
-    // TODO
     life -= 1;
     setCurrentPosition(new Vector(0, 0));
   }
 
-  public boolean getIsInvulnerable() {
-    return isInvulnerable;
+  public boolean isInvulnerable() {
+    return invulnerable;
   }
 
   @Override
@@ -179,6 +179,10 @@ public class SuperPacmanPlayer extends Player {
     ((SuperPacmanInteractionVisitor) v).interactWith(this);
   }
 
+  public int getCollectedDiamonds() {
+    return collectedDiamonds;
+  }
+
   private class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
     @Override
     public void interactWith(SuperPacmanPlayer player) {
@@ -186,12 +190,15 @@ public class SuperPacmanPlayer extends Player {
 
     @Override
     public void interactWith(Door door) {
+      invulnerable = false;
+      collectedDiamonds = 0;
       setIsPassingADoor(door);
     }
 
     @Override
     public void interactWith(Diamond diamond) {
       score += Diamond.VALUE;
+      ++collectedDiamonds;
     }
 
     @Override
@@ -202,7 +209,7 @@ public class SuperPacmanPlayer extends Player {
 
     @Override
     public void interactWith(Bonus bonus) {
-      isInvulnerable = true;
+      invulnerable = true;
       bonusTimer = BONUS_DURAION;
     }
 
@@ -212,7 +219,7 @@ public class SuperPacmanPlayer extends Player {
     }
 
     public void interactWith(Ghost ghost) {
-      if (isInvulnerable) {
+      if (invulnerable) {
         score += Ghost.GHOST_SCORE;
         ghost.respawn();
       } else {

@@ -30,12 +30,12 @@ public class Key extends CollectableAreaEntity implements Logic {
 
   @Override
   public boolean isOn() {
-    return getIsCollected();
+    return isCollected();
   }
 
   @Override
   public boolean isOff() {
-    return !getIsCollected();
+    return !isCollected();
   }
 
   @Override

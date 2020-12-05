@@ -12,10 +12,12 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 
 public class Gate extends AreaEntity {
   Sprite gateSprite;
   Logic isOpen;
+  boolean allDiamondsCollected;
 
   public Gate(Area area, Axis axis, DiscreteCoordinates position, Logic isOpen) {
     super(area, axis.toOrientation(), position);
@@ -26,8 +28,15 @@ public class Gate extends AreaEntity {
 
   @Override
   public void draw(Canvas canvas) {
-    if (isOpen.isOff())
+    if (isOpen.isOff() || !allDiamondsCollected)
       gateSprite.draw(canvas);
+  }
+
+  @Override
+  public void update(float deltaTime) {
+    SuperPacmanArea area = ((SuperPacmanArea) getOwnerArea());
+    allDiamondsCollected = area.isEveryDiamondCollected();
+    super.update(deltaTime);
   }
 
   @Override
@@ -37,7 +46,7 @@ public class Gate extends AreaEntity {
 
   @Override
   public boolean takeCellSpace() {
-    return isOpen.isOff();
+    return isOpen.isOff() || !allDiamondsCollected;
   }
 
   @Override

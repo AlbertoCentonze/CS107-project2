@@ -13,6 +13,7 @@ import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
+import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 
 abstract public class Ghost extends MovableAreaEntity {
   final static int GHOST_SCORE = 500;
@@ -59,7 +60,7 @@ abstract public class Ghost extends MovableAreaEntity {
   }
 
   public boolean getIsAfraid() {
-    return ((SuperPacmanArea) getOwnerArea()).getAreGhostsScared();
+    return ((SuperPacmanArea) getOwnerArea()).isEveryGhostScared();
   }
 
   public void respawn() {
@@ -69,12 +70,12 @@ abstract public class Ghost extends MovableAreaEntity {
 
   @Override
   final public boolean isViewInteractable() {
-    return true;
+    return false;
   }
 
   @Override
   final public boolean isCellInteractable() {
-    return false;
+    return true;
   }
 
   @Override
@@ -83,8 +84,8 @@ abstract public class Ghost extends MovableAreaEntity {
   }
 
   @Override
-  final public void acceptInteraction(AreaInteractionVisitor v) {
-    // emtpy because they can't interact, just ask for them
+  public void acceptInteraction(AreaInteractionVisitor v) {
+    ((SuperPacmanInteractionVisitor) v).interactWith(this);
   }
 
   @Override

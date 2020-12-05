@@ -41,6 +41,8 @@ public class SuperPacmanBehavior extends AreaBehavior {
     }
   }
 
+  protected int totalDiamonds = 0;
+
   /**
    * Default SuperPacmanBehavior Constructor
    * 
@@ -75,6 +77,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
             break;
           case FREE_WITH_DIAMOND:
             area.registerActor(new Diamond(area, currentPosition));
+            ++totalDiamonds;
             break;
           case FREE_WITH_BONUS:
             area.registerActor(new Bonus(area, currentPosition));
@@ -95,7 +98,6 @@ public class SuperPacmanBehavior extends AreaBehavior {
           case NONE:
           default:
             break;
-
         }
       }
     }
