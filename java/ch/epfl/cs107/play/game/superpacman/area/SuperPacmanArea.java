@@ -1,15 +1,18 @@
 package ch.epfl.cs107.play.game.superpacman.area;
 
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.game.areagame.AreaGraph;
 import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 import ch.epfl.cs107.play.io.FileSystem;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 abstract public class SuperPacmanArea extends Area {
   private SuperPacmanBehavior behavior;
-  private boolean ghostsScared;
+  private boolean ghostsScared = false;
   private boolean diamondsCollected = false;
+  private DiscreteCoordinates playerPosition;
 
   /**
    * Create the area by adding it all actors called by begin method Note it set
@@ -44,9 +47,18 @@ abstract public class SuperPacmanArea extends Area {
     return diamondsCollected;
   }
 
-  public void updateAreaInformations(SuperPacmanPlayer player) {
+  public DiscreteCoordinates getPlayerPosition() {
+    return playerPosition;
+  }
+
+  public void updateAreaState(SuperPacmanPlayer player) {
     diamondsCollected = player.getCollectedDiamonds() == behavior.totalDiamonds;
     ghostsScared = player.isInvulnerable();
+    playerPosition = player.getCurrentCells().get(0);
+  }
+
+  public AreaGraph getGraph() {
+    return behavior.graph;
   }
 
 }

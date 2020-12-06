@@ -6,7 +6,6 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RandomGenerator;
 
 public class Blinky extends Ghost {
-  private static final int MAX = 4;
   private int frameCounter = 0;
 
   public Blinky(Area area, DiscreteCoordinates position) {
@@ -18,15 +17,14 @@ public class Blinky extends Ghost {
     super.update(deltaTime);
 
     ++frameCounter;
-    if (frameCounter % GHOST_SPEED == 0)
+    if (frameCounter % GHOST_DEFAULT_SPEED == 0)
       orientate(getNextOrientation());
 
   }
 
   @Override
   protected Orientation getNextOrientation() {
-    int randomInt = RandomGenerator.getInstance().nextInt(MAX);
-    return Orientation.fromInt(randomInt);
+    return Orientation.pickRandomly();
   }
 
 }

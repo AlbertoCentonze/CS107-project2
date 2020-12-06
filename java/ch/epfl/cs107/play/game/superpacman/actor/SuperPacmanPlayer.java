@@ -24,7 +24,7 @@ public class SuperPacmanPlayer extends Player {
   private Sprite[][] spriteSheets = new Sprite[4][4];
   private Animation[] pacmanAnimations = new Animation[4];
 
-  private final static int ANIMATION_DURATION = 1; // TODO back to 6
+  private final static int ANIMATION_DURATION = 6; // TODO back to 6
   private final static int BONUS_DURAION = 10;
   public final static int MAX_LIFE = 5;
 

@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.superpacman.area;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
+import ch.epfl.cs107.play.game.areagame.AreaGraph;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.superpacman.actor.Blinky;
@@ -41,7 +42,11 @@ public class SuperPacmanBehavior extends AreaBehavior {
     }
   }
 
+  int height;
+  int width;
+
   protected int totalDiamonds = 0;
+  protected AreaGraph graph;
 
   /**
    * Default SuperPacmanBehavior Constructor
@@ -51,8 +56,10 @@ public class SuperPacmanBehavior extends AreaBehavior {
    */
   public SuperPacmanBehavior(Window window, String name) {
     super(window, name);
-    int height = getHeight();
-    int width = getWidth();
+    graph = new AreaGraph();
+    height = getHeight();
+    width = getWidth();
+    // png to array
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         int translatedY = height - 1 - y;
@@ -60,11 +67,22 @@ public class SuperPacmanBehavior extends AreaBehavior {
         setCell(x, y, new SuperPacmanCell(x, y, type));
       }
     }
+    // graph generation
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        SuperPacmanCellType cellType = ((SuperPacmanCell) getCell(x, y)).getType();
+        if (cellType == SuperPacmanCellType.WALL) {
+          DiscreteCoordinates currentPoint = new DiscreteCoordinates(x, y);
+          boolean[][] neighbours = getNeighbours(currentPoint);
+          graph.addNode(currentPoint, neighbours[1][0], neighbours[0][1], neighbours[1][2], neighbours[2][1]);
+        }
+      }
+    }
   }
 
   protected void registerActors(Area area) {
-    int height = getHeight();
-    int width = getWidth();
+    height = getHeight();
+    width = getWidth();
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         int translatedY = height - 1 - y;

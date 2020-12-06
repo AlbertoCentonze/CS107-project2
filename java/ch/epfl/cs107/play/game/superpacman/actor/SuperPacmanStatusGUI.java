@@ -10,7 +10,7 @@ import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class SuperPacmanStatusGUI implements Graphics { // TODO updatable?
+public class SuperPacmanStatusGUI implements Graphics {
   ImageGraphics[] lifeGraphics = new ImageGraphics[5];
   TextGraphics scoreGraphics;
   private final static int DEPTH = 0;
@@ -19,7 +19,7 @@ public class SuperPacmanStatusGUI implements Graphics { // TODO updatable?
   private int score;
 
   protected SuperPacmanStatusGUI() {
-  }
+  };
 
   public void setGUI(int currentLife, int score) {
     this.currentLife = currentLife;

@@ -18,13 +18,14 @@ import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor
 abstract public class Ghost extends MovableAreaEntity {
   final static int GHOST_SCORE = 500;
   final static int SIGHT_RADIUS = 5;
-  final static int GHOST_SPEED = 16;
+  final static int GHOST_DEFAULT_SPEED = 16;
 
   private Animation afraidAnimation;
   private Animation ghostAnimation;
 
-  private DiscreteCoordinates respawnPoint;
-  private boolean playerMemorized = false;
+  protected DiscreteCoordinates respawnPoint;
+
+  private int ghostCurrentSpeed = GHOST_DEFAULT_SPEED;
 
   public Ghost(Area area, DiscreteCoordinates position, String ghostType) {
     super(area, Orientation.UP, position);
@@ -43,9 +44,9 @@ abstract public class Ghost extends MovableAreaEntity {
   public void update(float deltaTime) {
     super.update(deltaTime);
 
-    move(GHOST_SPEED);
+    move(ghostCurrentSpeed);
 
-    if (getIsAfraid())
+    if (isScared())
       afraidAnimation.update(deltaTime);
     else
       ghostAnimation.update(deltaTime);
@@ -53,18 +54,21 @@ abstract public class Ghost extends MovableAreaEntity {
 
   @Override
   public void draw(Canvas canvas) {
-    if (getIsAfraid())
+    if (isScared())
       afraidAnimation.draw(canvas);
     else
       ghostAnimation.draw(canvas);
   }
 
-  public boolean getIsAfraid() {
+  protected boolean isScared() {
     return ((SuperPacmanArea) getOwnerArea()).isEveryGhostScared();
   }
 
+  protected void setSpeed(int newSpeed) {
+    this.ghostCurrentSpeed = newSpeed;
+  }
+
   public void respawn() {
-    playerMemorized = false;
     setCurrentPosition(respawnPoint.toVector());
   }
 

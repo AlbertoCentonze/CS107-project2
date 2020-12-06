@@ -38,7 +38,8 @@ public class SuperPacman extends RPG {
   public boolean begin(Window window, FileSystem fileSystem) {
 
     if (super.begin(window, fileSystem)) {
-      areaIndex = 0;
+      // TODO
+      areaIndex = 1;
       createAreas();
       Area area = setCurrentArea(areas[areaIndex], true);
       player = new SuperPacmanPlayer(area, PLAYER_SPAWN_COORDINATES[areaIndex]);
@@ -52,7 +53,7 @@ public class SuperPacman extends RPG {
   public void update(float deltaTime) {
     super.update(deltaTime);
     SuperPacmanArea area = ((SuperPacmanArea) getCurrentArea());
-    area.updateAreaInformations(player);
+    area.updateAreaState(player);
   }
 
   @Override
