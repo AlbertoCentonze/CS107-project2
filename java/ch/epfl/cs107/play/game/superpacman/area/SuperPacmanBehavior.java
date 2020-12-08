@@ -4,6 +4,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
 import ch.epfl.cs107.play.game.areagame.AreaGraph;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
+import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.superpacman.actor.Blinky;
 import ch.epfl.cs107.play.game.superpacman.actor.Bonus;
@@ -14,6 +15,7 @@ import ch.epfl.cs107.play.game.superpacman.actor.Pinky;
 import ch.epfl.cs107.play.game.superpacman.actor.Wall;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
+import ch.epfl.cs107.play.math.Vector;
 
 public class SuperPacmanBehavior extends AreaBehavior {
   public enum SuperPacmanCellType {
@@ -71,12 +73,23 @@ public class SuperPacmanBehavior extends AreaBehavior {
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         SuperPacmanCellType cellType = ((SuperPacmanCell) getCell(x, y)).getType();
-        if (cellType == SuperPacmanCellType.WALL) {
+        if (cellType != SuperPacmanCellType.WALL) {
           DiscreteCoordinates currentPoint = new DiscreteCoordinates(x, y);
-          boolean[][] neighbours = getNeighbours(currentPoint);
-          graph.addNode(currentPoint, neighbours[1][0], neighbours[0][1], neighbours[1][2], neighbours[2][1]);
+          graph.addNode(currentPoint, isEdgeFree(currentPoint, Orientation.LEFT),
+              isEdgeFree(currentPoint, Orientation.UP), isEdgeFree(currentPoint, Orientation.RIGHT),
+              isEdgeFree(currentPoint, Orientation.DOWN));
         }
       }
+    }
+  }
+
+  private boolean isEdgeFree(DiscreteCoordinates point, Orientation orientation) {
+    Vector edgeVector = point.toVector().add(orientation.toVector());
+    try {
+      SuperPacmanCellType edgeType = ((SuperPacmanCell) getCell((int) edgeVector.x, (int) edgeVector.y)).type;
+      return edgeType != SuperPacmanCellType.WALL;
+    } catch (ArrayIndexOutOfBoundsException e) {
+      return false;
     }
   }
 
@@ -125,7 +138,6 @@ public class SuperPacmanBehavior extends AreaBehavior {
     int height = getHeight();
     int width = getWidth();
     boolean[][] neighbours = new boolean[3][3];
-
     for (int yOffset = -1; yOffset < 2; ++yOffset) {
       for (int xOffset = -1; xOffset < 2; ++xOffset) {
         DiscreteCoordinates currentNeighbour = new DiscreteCoordinates(point.x + xOffset, point.y + yOffset);

@@ -1,14 +1,18 @@
 package ch.epfl.cs107.play.game.superpacman.area;
 
+import java.util.Queue;
+
 import ch.epfl.cs107.play.game.areagame.Area;
-import ch.epfl.cs107.play.game.areagame.AreaGraph;
 import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
+import ch.epfl.cs107.play.game.areagame.actor.Orientation;
+import ch.epfl.cs107.play.math.Vector;
+import ch.epfl.cs107.play.signal.logic.Logic;
 
-abstract public class SuperPacmanArea extends Area {
+abstract public class SuperPacmanArea extends Area implements Logic {
   private SuperPacmanBehavior behavior;
   private boolean ghostsScared = false;
   private boolean diamondsCollected = false;
@@ -39,12 +43,8 @@ abstract public class SuperPacmanArea extends Area {
     return false;
   }
 
-  public boolean isEveryGhostScared() {
+  public boolean isGhostsScared() {
     return ghostsScared;
-  }
-
-  public boolean isEveryDiamondCollected() {
-    return diamondsCollected;
   }
 
   public DiscreteCoordinates getPlayerPosition() {
@@ -54,11 +54,26 @@ abstract public class SuperPacmanArea extends Area {
   public void updateAreaState(SuperPacmanPlayer player) {
     diamondsCollected = player.getCollectedDiamonds() == behavior.totalDiamonds;
     ghostsScared = player.isInvulnerable();
-    playerPosition = player.getCurrentCells().get(0);
+    Vector playerVector = (player.getCurrentCells().get(player.getCurrentCells().size() - 1)).toVector().add(1f, 1f);
+    playerPosition = new DiscreteCoordinates((int) playerVector.x, (int) playerVector.y);
   }
 
-  public AreaGraph getGraph() {
-    return behavior.graph;
+  public Queue<Orientation> getPath(DiscreteCoordinates from, DiscreteCoordinates to) {
+    return behavior.graph.shortestPath(from, to);
   }
 
+  @Override
+  public boolean isOn() {
+    return diamondsCollected;
+  }
+
+  @Override
+  public boolean isOff() {
+    return !diamondsCollected;
+  }
+
+  @Override
+  public float getIntensity() {
+    return diamondsCollected ? 1 : 0;
+  }
 }

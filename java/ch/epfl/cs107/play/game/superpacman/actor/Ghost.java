@@ -44,9 +44,12 @@ abstract public class Ghost extends MovableAreaEntity {
   public void update(float deltaTime) {
     super.update(deltaTime);
 
-    move(ghostCurrentSpeed);
+    if (!isDisplacementOccurs() && getNextOrientation() != null) {
+      orientate(getNextOrientation());
+      move(ghostCurrentSpeed);
+    }
 
-    if (isScared())
+    if (isScared())// TODO update animation in the level
       afraidAnimation.update(deltaTime);
     else
       ghostAnimation.update(deltaTime);
@@ -61,7 +64,7 @@ abstract public class Ghost extends MovableAreaEntity {
   }
 
   protected boolean isScared() {
-    return ((SuperPacmanArea) getOwnerArea()).isEveryGhostScared();
+    return ((SuperPacmanArea) getOwnerArea()).isGhostsScared();
   }
 
   protected void setSpeed(int newSpeed) {
