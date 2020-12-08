@@ -16,23 +16,22 @@ import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 
 abstract public class Ghost extends MovableAreaEntity {
-  final static int GHOST_SCORE = 500;
-  final static int SIGHT_RADIUS = 5;
-  final static int GHOST_DEFAULT_SPEED = 16;
-
+  public final static int SCORE = 500;
+  public final static int DEFAULT_SPEED = 16;
   private Animation afraidAnimation;
-  private Animation ghostAnimation;
+  private Animation[] ghostAnimations;
 
   protected DiscreteCoordinates respawnPoint;
 
-  private int ghostCurrentSpeed = GHOST_DEFAULT_SPEED;
+  private int ghostCurrentSpeed = DEFAULT_SPEED;
 
   public Ghost(Area area, DiscreteCoordinates position, String ghostType) {
     super(area, Orientation.UP, position);
     this.respawnPoint = position;
 
-    Sprite[] ghostSpritesheet = RPGSprite.extractSprites("superpacman/ghost." + ghostType, 2, 1.f, 1.f, this, 16, 16);
-    ghostAnimation = new Animation(3, ghostSpritesheet);
+    Sprite[][] ghostSpritesheets = RPGSprite.extractSprites("superpacman/ghost." + ghostType, 2, 1.f, 1.f, this, 16, 16,
+        new Orientation[] { Orientation.DOWN, Orientation.LEFT, Orientation.UP, Orientation.RIGHT });
+    ghostAnimations = Animation.createAnimations(3, ghostSpritesheets);
 
     Sprite[] afraidSpritesheet = RPGSprite.extractSprites("superpacman/ghost.afraid", 2, 1.f, 1.f, this, 16, 16);
     afraidAnimation = new Animation(3, afraidSpritesheet);
@@ -44,7 +43,7 @@ abstract public class Ghost extends MovableAreaEntity {
   public void update(float deltaTime) {
     super.update(deltaTime);
 
-    if (!isDisplacementOccurs() && getNextOrientation() != null) {
+    if (!isDisplacementOccurs()) {
       orientate(getNextOrientation());
       move(ghostCurrentSpeed);
     }
@@ -52,7 +51,22 @@ abstract public class Ghost extends MovableAreaEntity {
     if (isScared())// TODO update animation in the level
       afraidAnimation.update(deltaTime);
     else
-      ghostAnimation.update(deltaTime);
+      switch (getOrientation()) {
+        case DOWN:
+          ghostAnimations[0].update(deltaTime);
+          break;
+        case LEFT:
+          ghostAnimations[1].update(deltaTime);
+          break;
+        case RIGHT:
+          ghostAnimations[3].update(deltaTime);
+          break;
+        case UP:
+          ghostAnimations[2].update(deltaTime);
+          break;
+        default:
+          break;
+      }
   }
 
   @Override
@@ -60,7 +74,22 @@ abstract public class Ghost extends MovableAreaEntity {
     if (isScared())
       afraidAnimation.draw(canvas);
     else
-      ghostAnimation.draw(canvas);
+      switch (getOrientation()) {
+        case DOWN:
+          ghostAnimations[0].draw(canvas);
+          break;
+        case LEFT:
+          ghostAnimations[1].draw(canvas);
+          break;
+        case RIGHT:
+          ghostAnimations[3].draw(canvas);
+          break;
+        case UP:
+          ghostAnimations[2].draw(canvas);
+          break;
+        default:
+          break;
+      }
   }
 
   protected boolean isScared() {

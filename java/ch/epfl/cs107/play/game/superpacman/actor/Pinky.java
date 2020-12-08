@@ -4,7 +4,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-public class Pinky extends Ghost {
+public class Pinky extends GhostPathfinder {
 
   public Pinky(Area area, DiscreteCoordinates position) {
     super(area, position, "pinky");
@@ -13,7 +13,7 @@ public class Pinky extends Ghost {
   @Override
   protected Orientation getNextOrientation() {
     // TODO Auto-generated method stub
-    return null;
+    return Orientation.UP;
   }
 
 }

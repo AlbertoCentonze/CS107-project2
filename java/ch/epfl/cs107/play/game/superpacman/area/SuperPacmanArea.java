@@ -54,8 +54,7 @@ abstract public class SuperPacmanArea extends Area implements Logic {
   public void updateAreaState(SuperPacmanPlayer player) {
     diamondsCollected = player.getCollectedDiamonds() == behavior.totalDiamonds;
     ghostsScared = player.isInvulnerable();
-    Vector playerVector = (player.getCurrentCells().get(player.getCurrentCells().size() - 1)).toVector().add(1f, 1f);
-    playerPosition = new DiscreteCoordinates((int) playerVector.x, (int) playerVector.y);
+    playerPosition = (player.getCurrentCells().get(player.getCurrentCells().size() - 1));
   }
 
   public Queue<Orientation> getPath(DiscreteCoordinates from, DiscreteCoordinates to) {

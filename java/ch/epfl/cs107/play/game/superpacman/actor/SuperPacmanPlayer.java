@@ -138,19 +138,16 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public List<DiscreteCoordinates> getFieldOfViewCells() {
-    // TODO probably going to need it
     return null;
   }
 
   @Override
   public boolean wantsCellInteraction() {
-    // TODO Auto-generated method stub
     return true;
   }
 
   @Override
   public boolean wantsViewInteraction() {
-    // TODO Auto-generated method stub
     return false;
   }
 
@@ -213,14 +210,9 @@ public class SuperPacmanPlayer extends Player {
       bonusTimer = BONUS_DURAION;
     }
 
-    @Override
-    public void interactWith(Key key) {
-      // TODO use signals in areagraph
-    }
-
     public void interactWith(Ghost ghost) {
       if (invulnerable) {
-        score += Ghost.GHOST_SCORE;
+        score += Ghost.SCORE;
         ghost.respawn();
       } else {
         loseLife();
