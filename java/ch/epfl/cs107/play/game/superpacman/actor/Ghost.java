@@ -102,7 +102,10 @@ abstract public class Ghost extends MovableAreaEntity {
   }
 
   public void respawn() {
+    getOwnerArea().leaveAreaCells(this, getEnteredCells());
     setCurrentPosition(respawnPoint.toVector());
+    getOwnerArea().enterAreaCells(this, getCurrentCells());
+    resetMotion();
   }
 
   @Override
