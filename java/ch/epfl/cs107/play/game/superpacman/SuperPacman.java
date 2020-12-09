@@ -14,7 +14,7 @@ import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 
 public class SuperPacman extends RPG {
-  public final static float CAMERA_SCALE_FACTOR = 15.f;
+  public final static float CAMERA_SCALE_FACTOR = 30.f; // TODO make it individual for each level
   public final static float STEP = 0.05f;
 
   private SuperPacmanPlayer player;

@@ -23,11 +23,12 @@ abstract public class Ghost extends MovableAreaEntity {
 
   protected DiscreteCoordinates respawnPoint;
 
-  private int ghostCurrentSpeed = DEFAULT_SPEED;
+  private int ghostCurrentSpeed;
 
   public Ghost(Area area, DiscreteCoordinates position, String ghostType) {
     super(area, Orientation.UP, position);
     this.respawnPoint = position;
+    this.ghostCurrentSpeed = DEFAULT_SPEED;
 
     Sprite[][] ghostSpritesheets = RPGSprite.extractSprites("superpacman/ghost." + ghostType, 2, 1.f, 1.f, this, 16, 16,
         new Orientation[] { Orientation.DOWN, Orientation.LEFT, Orientation.UP, Orientation.RIGHT });
@@ -48,7 +49,7 @@ abstract public class Ghost extends MovableAreaEntity {
       move(ghostCurrentSpeed);
     }
 
-    if (isScared())// TODO update animation in the level
+    if (isScared())
       afraidAnimation.update(deltaTime);
     else
       switch (getOrientation()) {

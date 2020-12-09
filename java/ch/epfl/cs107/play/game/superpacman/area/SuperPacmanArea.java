@@ -54,7 +54,7 @@ abstract public class SuperPacmanArea extends Area implements Logic {
   public void updateAreaState(SuperPacmanPlayer player) {
     diamondsCollected = player.getCollectedDiamonds() == behavior.totalDiamonds;
     ghostsScared = player.isInvulnerable();
-    playerPosition = (player.getCurrentCells().get(player.getCurrentCells().size() - 1));
+    playerPosition = (player.getCurrentCells().get(0));
   }
 
   public Queue<Orientation> getPath(DiscreteCoordinates from, DiscreteCoordinates to) {
@@ -74,5 +74,9 @@ abstract public class SuperPacmanArea extends Area implements Logic {
   @Override
   public float getIntensity() {
     return diamondsCollected ? 1 : 0;
+  }
+
+  public DiscreteCoordinates getReachableRandomPointInRadius(DiscreteCoordinates center, int radius) {
+    return behavior.getRandomFreePoint(center, radius);
   }
 }

@@ -1,11 +1,14 @@
 package ch.epfl.cs107.play.game.superpacman.area;
 
+import java.util.Random;
+
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
 import ch.epfl.cs107.play.game.areagame.AreaGraph;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.game.superpacman.actor.Blinky;
 import ch.epfl.cs107.play.game.superpacman.actor.Bonus;
 import ch.epfl.cs107.play.game.superpacman.actor.Cherry;
@@ -14,6 +17,7 @@ import ch.epfl.cs107.play.game.superpacman.actor.Inky;
 import ch.epfl.cs107.play.game.superpacman.actor.Pinky;
 import ch.epfl.cs107.play.game.superpacman.actor.Wall;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.RandomGenerator;
 import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.math.Vector;
 
@@ -93,6 +97,30 @@ public class SuperPacmanBehavior extends AreaBehavior {
     }
   }
 
+  public DiscreteCoordinates getRandomFreePoint(DiscreteCoordinates center, int radius) {
+    // TODO fix it
+    Random r = RandomGenerator.getInstance();
+
+    int minX = -center.x;
+    int maxX = center.x;
+    int minY = -center.y;
+    int maxY = center.y;
+
+    int xRandom = r.ints(1, minX, maxX).findFirst().getAsInt();
+    int yRandom = r.ints(1, minY, maxY).findFirst().getAsInt();
+
+    SuperPacmanCell randomCell;
+    try {
+      randomCell = (SuperPacmanCell) getCell(xRandom, yRandom);
+    } catch (ArrayIndexOutOfBoundsException e) {
+      return getRandomFreePoint(center, radius);
+    }
+    if (randomCell.getType() != SuperPacmanCellType.WALL) {
+      return randomCell.getCurrentCells().get(0);
+    }
+    return getRandomFreePoint(center, radius);
+  }
+
   protected void registerActors(Area area) {
     height = getHeight();
     width = getWidth();
@@ -123,7 +151,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
             area.registerActor(new Inky(area, currentPosition));
             break;
           case FREE_WITH_PINKY:
-            area.registerActor(new Pinky(area, currentPosition));
+            // TODO area.registerActor(new Pinky(area, currentPosition));
             break;
           case FREE_EMPTY:
           case NONE:
