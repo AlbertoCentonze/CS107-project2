@@ -6,6 +6,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.game.superpacman.actor.Gate;
 
 public class Level2 extends SuperPacmanArea {
+  public final static DiscreteCoordinates PLAYER_SPAWN_COORDINATES = new DiscreteCoordinates(15, 29);
   Entity[] entities = new Entity[4];
 
   @Override
@@ -22,4 +23,8 @@ public class Level2 extends SuperPacmanArea {
     // registerActor(ent);
   }
 
+  @Override
+  public float getCameraScaleFactor() {
+    return 30.f;
+  }
 }

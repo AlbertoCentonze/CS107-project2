@@ -101,24 +101,22 @@ public class SuperPacmanBehavior extends AreaBehavior {
     // TODO fix it
     Random r = RandomGenerator.getInstance();
 
-    int minX = -center.x;
-    int maxX = center.x;
-    int minY = -center.y;
-    int maxY = center.y;
+    int min = -radius;
+    int max = radius;
 
-    int xRandom = r.ints(1, minX, maxX).findFirst().getAsInt();
-    int yRandom = r.ints(1, minY, maxY).findFirst().getAsInt();
+    int xRandom;
+    int yRandom;
+    SuperPacmanCell currentCell;
+    boolean wall = false;
 
-    SuperPacmanCell randomCell;
-    try {
-      randomCell = (SuperPacmanCell) getCell(xRandom, yRandom);
-    } catch (ArrayIndexOutOfBoundsException e) {
-      return getRandomFreePoint(center, radius);
-    }
-    if (randomCell.getType() != SuperPacmanCellType.WALL) {
-      return randomCell.getCurrentCells().get(0);
-    }
-    return getRandomFreePoint(center, radius);
+    do {
+      xRandom = r.ints(1, min, max).findFirst().getAsInt() + center.x;
+      yRandom = r.ints(1, min, max).findFirst().getAsInt() + center.y;
+      currentCell = (SuperPacmanCell) getCell(xRandom, yRandom);
+      wall = (currentCell.getType() == SuperPacmanCellType.WALL);
+    } while (wall || xRandom < 0 || yRandom < 0 || xRandom > getWidth() || yRandom > getHeight());
+
+    return currentCell.getCurrentCells().get(0);
   }
 
   protected void registerActors(Area area) {
@@ -162,7 +160,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
     }
   }
 
-  public boolean[][] getNeighbours(DiscreteCoordinates point) {
+  private boolean[][] getNeighbours(DiscreteCoordinates point) {
     int height = getHeight();
     int width = getWidth();
     boolean[][] neighbours = new boolean[3][3];

@@ -26,6 +26,7 @@ public class SuperPacmanStatusGUI implements Graphics {
     this.score = score;
   }
 
+  // TODO fix position
   @Override
   public void draw(Canvas canvas) {
     float width = canvas.getScaledWidth();

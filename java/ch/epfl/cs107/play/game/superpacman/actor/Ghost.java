@@ -126,6 +126,7 @@ abstract public class Ghost extends MovableAreaEntity {
   @Override
   public void acceptInteraction(AreaInteractionVisitor v) {
     ((SuperPacmanInteractionVisitor) v).interactWith(this);
+    // TODO View interaction
   }
 
   @Override

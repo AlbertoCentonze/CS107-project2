@@ -20,11 +20,10 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 public class SuperPacmanPlayer extends Player {
-  // TODO Maybe create a spritesheet class?
   private Sprite[][] spriteSheets = new Sprite[4][4];
   private Animation[] pacmanAnimations = new Animation[4];
 
-  private final static int ANIMATION_DURATION = 6; // TODO back to 6
+  private final static int ANIMATION_DURATION = 6;
   private final static int BONUS_DURAION = 10;
   public final static int MAX_LIFE = 5;
 
@@ -72,8 +71,11 @@ public class SuperPacmanPlayer extends Player {
       anim.update(deltaTime);
     }
 
-    // TODO life oscillates if invincible
-    hud.setGUI(life, score);
+    if (invulnerable) {
+      hud.setGUI((int) (bonusTimer / 2), score);
+    } else {
+      hud.setGUI(life, score);
+    }
 
     if (bonusTimer >= 0)
       bonusTimer -= deltaTime;
@@ -123,6 +125,7 @@ public class SuperPacmanPlayer extends Player {
   }
 
   public void loseLife() {
+    // TODO respawn in the correct point
     life -= 1;
     setCurrentPosition(new Vector(0, 0));
   }

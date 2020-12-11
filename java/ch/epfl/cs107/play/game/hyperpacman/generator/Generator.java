@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Generator {
+  // TODO DEBUG METHOD MAIN DELETE
   public static void main(String[] args) {
     Generator mazeGenerator = new Generator(5);
     boolean[][] maze = mazeGenerator.getMaze();
@@ -21,7 +22,7 @@ public class Generator {
   Node[][] grid;
 
   public Generator(int size) {
-    this.size = size;
+    this.size = size / 2;
     this.grid = new Node[size][size];
     for (int x = 0; x < this.size; x++) {
       for (int y = 0; y < this.size; y++) {
