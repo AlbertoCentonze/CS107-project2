@@ -24,7 +24,7 @@ public class SuperPacman extends RPG {
 
     if (super.begin(window, fileSystem)) {
       createAreas();
-      Area area = setCurrentArea("superpacman/Level2", true); // TODO DEBUG
+      Area area = setCurrentArea("superpacman/Level0", true); // TODO DEBUG
       player = new SuperPacmanPlayer(area, Level0.PLAYER_SPAWN_POSITION);
       initPlayer(player);
       return true;

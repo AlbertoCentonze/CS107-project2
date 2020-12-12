@@ -68,4 +68,10 @@ abstract public class SuperPacmanArea extends Area implements Logic {
   public DiscreteCoordinates getReachableRandomPointInRadius(DiscreteCoordinates center, int radius) {
     return behavior.getRandomFreePoint(center, radius);
   }
+
+  public DiscreteCoordinates getReachableRandomPointInRadius() {
+    return behavior.getRandomFreePoint();
+  }
+
+  abstract public DiscreteCoordinates getRespawnPoint();
 }

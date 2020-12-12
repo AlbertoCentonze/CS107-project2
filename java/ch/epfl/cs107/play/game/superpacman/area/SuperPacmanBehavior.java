@@ -98,7 +98,6 @@ public class SuperPacmanBehavior extends AreaBehavior {
   }
 
   public DiscreteCoordinates getRandomFreePoint(DiscreteCoordinates center, int radius) {
-    // TODO fix it
     Random r = RandomGenerator.getInstance();
 
     int min = -radius;
@@ -114,7 +113,24 @@ public class SuperPacmanBehavior extends AreaBehavior {
       yRandom = r.ints(1, min, max).findFirst().getAsInt() + center.y;
       currentCell = (SuperPacmanCell) getCell(xRandom, yRandom);
       wall = (currentCell.getType() == SuperPacmanCellType.WALL);
-    } while (wall || xRandom < 0 || yRandom < 0 || xRandom > getWidth() || yRandom > getHeight());
+    } while (wall || xRandom < 0 || yRandom < 0 || xRandom > getWidth() || yRandom > height);
+
+    return currentCell.getCurrentCells().get(0);
+  }
+
+  public DiscreteCoordinates getRandomFreePoint() {
+    Random r = RandomGenerator.getInstance();
+    int xRandom;
+    int yRandom;
+    SuperPacmanCell currentCell;
+    boolean wall = false;
+
+    do {
+      xRandom = r.nextInt(width);
+      yRandom = r.nextInt(height);
+      currentCell = (SuperPacmanCell) getCell(xRandom, yRandom);
+      wall = (currentCell.getType() == SuperPacmanCellType.WALL);
+    } while (wall || xRandom < 0 || yRandom < 0 || xRandom > width || yRandom > height);
 
     return currentCell.getCurrentCells().get(0);
   }
@@ -149,7 +165,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
             area.registerActor(new Inky(area, currentPosition));
             break;
           case FREE_WITH_PINKY:
-            // TODO area.registerActor(new Pinky(area, currentPosition));
+            area.registerActor(new Pinky(area, currentPosition));
             break;
           case FREE_EMPTY:
           case NONE:
@@ -160,16 +176,15 @@ public class SuperPacmanBehavior extends AreaBehavior {
     }
 
     /*
-     * int f = 0; while (f < 1000) { DiscreteCoordinates point =
-     * getRandomFreePoint(new DiscreteCoordinates(15, 12), 7);
-     * area.registerActor(new Wall(area, point, new boolean[][] { { true, true,
-     * true, }, { true, true, true, }, { true, true, true, } })); ++f; } TODO debug
+     * int f = 0; while (f < 10000) { DiscreteCoordinates point =
+     * getRandomFreePoint(); area.registerActor(new Wall(area, point, new
+     * boolean[][] { { true, true, true, }, { true, true, true, }, { true, true,
+     * true, } })); ++f; } TODO DEBUG
      */
+
   }
 
   private boolean[][] getNeighbours(DiscreteCoordinates point) {
-    int height = getHeight();
-    int width = getWidth();
     boolean[][] neighbours = new boolean[3][3];
     for (int yOffset = -1; yOffset < 2; ++yOffset) {
       for (int xOffset = -1; xOffset < 2; ++xOffset) {

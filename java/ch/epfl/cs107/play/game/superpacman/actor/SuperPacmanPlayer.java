@@ -19,12 +19,13 @@ import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 
 public class SuperPacmanPlayer extends Player {
   private Sprite[][] spriteSheets = new Sprite[4][4];
   private Animation[] pacmanAnimations = new Animation[4];
 
-  private final static int ANIMATION_DURATION = 1;
+  private final static int ANIMATION_DURATION = 6;
   private final static int BONUS_DURAION = 10;
   public final static int MAX_LIFE = 5;
 
@@ -126,9 +127,9 @@ public class SuperPacmanPlayer extends Player {
   }
 
   public void loseLife() {
-    // TODO respawn in the correct point
+    setCurrentPosition(((SuperPacmanArea) getOwnerArea()).getRespawnPoint().toVector());
+    resetMotion();
     life -= 1;
-    setCurrentPosition(new Vector(0, 0));
   }
 
   public boolean isInvulnerable() {

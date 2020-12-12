@@ -43,4 +43,8 @@ public class Level0 extends SuperPacmanArea {
     for (Entity ent : gates)
       registerActor(ent);
   }
+
+  public DiscreteCoordinates getRespawnPoint() {
+    return PLAYER_SPAWN_POSITION;
+  }
 }

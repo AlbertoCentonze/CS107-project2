@@ -25,7 +25,7 @@ public class Level1 extends SuperPacmanArea {
     super.createArea();
     registerActor(new Background(this));
 
-    exitDoor = new Door(NEXT_LEVEL, Level2.PLAYER_SPAWN_COORDINATES, Logic.TRUE, this, Orientation.DOWN,
+    exitDoor = new Door(NEXT_LEVEL, Level2.PLAYER_SPAWN_POSITION, Logic.TRUE, this, Orientation.DOWN,
         new DiscreteCoordinates(14, 0), new DiscreteCoordinates(15, 0));
     registerActor(exitDoor);
     gates[0] = new Gate(this, Axis.HORIZONTAL, new DiscreteCoordinates(14, 2), this);
@@ -38,6 +38,10 @@ public class Level1 extends SuperPacmanArea {
   @Override
   public float getCameraScaleFactor() {
     return 40.f;
+  }
+
+  public DiscreteCoordinates getRespawnPoint() {
+    return PLAYER_SPAWN_POSITION;
   }
 
 }
