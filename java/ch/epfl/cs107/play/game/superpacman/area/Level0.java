@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.superpacman.area;
 
 import ch.epfl.cs107.play.game.actor.Entity;
 import ch.epfl.cs107.play.game.areagame.actor.Axis;
+import ch.epfl.cs107.play.game.areagame.actor.Background;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.game.superpacman.actor.Gate;
@@ -35,8 +36,8 @@ public class Level0 extends SuperPacmanArea {
     key = new Key(this, new DiscreteCoordinates(3, 4));
     exitDoor = new Door(NEXT_LEVEL, Level1.PLAYER_SPAWN_POSITION, Logic.TRUE, this, Orientation.UP,
         new DiscreteCoordinates(5, 9), new DiscreteCoordinates(6, 9));
-    gates[0] = new Gate(this, Axis.HORIZONTAL, new DiscreteCoordinates(5, 8), new And(key, this));
-    gates[1] = new Gate(this, Axis.HORIZONTAL, new DiscreteCoordinates(6, 8), new And(key, this));
+    gates[0] = new Gate(this, Axis.HORIZONTAL, new DiscreteCoordinates(5, 8), key);
+    gates[1] = new Gate(this, Axis.HORIZONTAL, new DiscreteCoordinates(6, 8), key);
     for (Entity ent : new Entity[] { key, exitDoor })
       registerActor(ent);
     for (Entity ent : gates)

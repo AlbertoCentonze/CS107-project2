@@ -6,12 +6,13 @@ import ch.epfl.cs107.play.game.superpacman.actor.Gate;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.game.areagame.actor.Axis;
+import ch.epfl.cs107.play.game.areagame.actor.Background;
 
 public class Level1 extends SuperPacmanArea {
   private static final String NEXT_LEVEL = "superpacman/Level2";
   public static final DiscreteCoordinates PLAYER_SPAWN_POSITION = new DiscreteCoordinates(15, 6);
 
-  Door nextLevel;
+  Door exitDoor;
   Gate[] gates = new Gate[2];
 
   @Override
@@ -22,19 +23,21 @@ public class Level1 extends SuperPacmanArea {
   @Override
   protected void createArea() {
     super.createArea();
+    registerActor(new Background(this));
 
-    nextLevel = new Door(NEXT_LEVEL, Level2.PLAYER_SPAWN_COORDINATES, Logic.TRUE, this, Orientation.DOWN,
+    exitDoor = new Door(NEXT_LEVEL, Level2.PLAYER_SPAWN_COORDINATES, Logic.TRUE, this, Orientation.DOWN,
         new DiscreteCoordinates(14, 0), new DiscreteCoordinates(15, 0));
-    registerActor(nextLevel);
-    // gates[0] = new Gate(this, Axis.HORIZONTAL, new DiscreteCoordinates(14, 2));
-    // gates[1] = new Gate(this, Axis.HORIZONTAL, new DiscreteCoordinates(15, 2));
-    // for (Entity ent : entities)
-    // registerActor(ent);
+    registerActor(exitDoor);
+    gates[0] = new Gate(this, Axis.HORIZONTAL, new DiscreteCoordinates(14, 2), this);
+    gates[1] = new Gate(this, Axis.HORIZONTAL, new DiscreteCoordinates(15, 2), this);
+
+    for (Gate gate : gates)
+      registerActor(gate);
   }
 
   @Override
   public float getCameraScaleFactor() {
-    return 30.f;
+    return 40.f;
   }
 
 }

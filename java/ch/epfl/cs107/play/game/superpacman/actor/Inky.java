@@ -8,8 +8,8 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Inky extends GhostPathfinder {
-  private static final int MAX_DISTANCE_SCARED = 5;
-  private static final int MAX_DISTANCE_NOT_SCARED = 10;
+  private static final int MAX_DISTANCE_SCARED = 4;
+  private static final int MAX_DISTANCE_NOT_SCARED = 8;
   private static final int SPEED_WHEN_SCARED = 10;
 
   public Inky(Area area, DiscreteCoordinates position) {

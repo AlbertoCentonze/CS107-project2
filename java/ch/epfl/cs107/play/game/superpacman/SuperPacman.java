@@ -11,8 +11,6 @@ import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 
 public class SuperPacman extends RPG {
-  public final static float STEP = 0.05f;
-
   private SuperPacmanPlayer player;
 
   private void createAreas() {
@@ -26,7 +24,7 @@ public class SuperPacman extends RPG {
 
     if (super.begin(window, fileSystem)) {
       createAreas();
-      Area area = setCurrentArea("superpacman/Level0", true);
+      Area area = setCurrentArea("superpacman/Level2", true); // TODO DEBUG
       player = new SuperPacmanPlayer(area, Level0.PLAYER_SPAWN_POSITION);
       initPlayer(player);
       return true;

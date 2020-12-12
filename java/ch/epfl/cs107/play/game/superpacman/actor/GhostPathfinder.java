@@ -16,6 +16,8 @@ public abstract class GhostPathfinder extends Ghost {
   private boolean playerSeen = false;
   private Path graphicPath; // TODO DEBUG
   private boolean runningAway = false;
+  private GhostState previousState;
+  private GhostState currentState;
 
   public GhostPathfinder(Area area, DiscreteCoordinates position, String ghostType) {
     super(area, position, ghostType);
@@ -44,27 +46,36 @@ public abstract class GhostPathfinder extends Ghost {
     if (path == null) {
       path = new LinkedList<>();
     }
-    if (isScared()) {
-      if (!runningAway || path.size() == 0) {
-        runningAway = true;
+
+    switch (currentState) {
+      case CHASING:
+        System.out.println("chasing player");
+        path = getPathChasing();
+        break;
+      case SCARED:
+        System.out.println("running away");
         path = getPathScared();
-      }
-      System.out.println("Running away");
-    } else if (playerSeen) {
-      runningAway = false;
-      System.out.println("Chasing player");
-      path = getPathChasing();
-    } else if (!playerSeen && path.size() == 0) {
-      runningAway = false;
-      System.out.println("Looking around");
-      path = getPathWaiting();
+        break;
+      case WANDERING:
+        System.out.println("looking around");
+        path = getPathWaiting();
+        break;
+      default:
+        path = new LinkedList<Orientation>();
+        path.add(Orientation.pickRandomly());
+        break;
+
     }
   }
 
   @Override
   public void update(float deltaTime) {
     playerSeen = checkForPlayer();
-    updatePath();
+    currentState = isScared() ? GhostState.SCARED : playerSeen ? GhostState.CHASING : GhostState.WANDERING;
+    if (path == null || path.size() == 0 || currentState != previousState)
+      updatePath();
+
+    previousState = currentState;
     super.update(deltaTime);
   }
 
@@ -94,5 +105,9 @@ public abstract class GhostPathfinder extends Ghost {
   public void respawn() {
     playerSeen = false;
     super.respawn();
+  }
+
+  private enum GhostState {
+    SCARED, WANDERING, CHASING
   }
 }

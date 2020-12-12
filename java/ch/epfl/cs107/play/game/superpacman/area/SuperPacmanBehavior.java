@@ -158,6 +158,13 @@ public class SuperPacmanBehavior extends AreaBehavior {
         }
       }
     }
+
+    /*
+     * int f = 0; while (f < 1000) { DiscreteCoordinates point =
+     * getRandomFreePoint(new DiscreteCoordinates(15, 12), 7);
+     * area.registerActor(new Wall(area, point, new boolean[][] { { true, true,
+     * true, }, { true, true, true, }, { true, true, true, } })); ++f; } TODO debug
+     */
   }
 
   private boolean[][] getNeighbours(DiscreteCoordinates point) {

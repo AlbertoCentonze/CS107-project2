@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.superpacman.generator;
+package ch.epfl.cs107.play.game.hyperpacman.generator;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -19,36 +19,37 @@ public class Generator {
   }
 
   int size;
-  Node[][] grid;
+  GeneratorNode[][] grid;
 
   public Generator(int size) {
     this.size = size / 2;
-    this.grid = new Node[size][size];
+    this.grid = new GeneratorNode[size][size];
     for (int x = 0; x < this.size; x++) {
       for (int y = 0; y < this.size; y++) {
-        this.grid[x][y] = new Node(x, y);
+        this.grid[x][y] = new GeneratorNode(x, y);
       }
     }
   }
 
   public boolean[][] getMaze() {
-    Node start = this.grid[(int) Math.floor(Math.random() * this.size)][(int) Math.floor(Math.random() * this.size)];
+    GeneratorNode start = this.grid[(int) Math.floor(Math.random() * this.size)][(int) Math
+        .floor(Math.random() * this.size)];
     start.visited = true;
-    Node current = start;
+    GeneratorNode current = start;
     while (true) {
       // Hunt
-      List<Node> neighbors = current.getNeighbors(this.grid, this.size);
+      List<GeneratorNode> neighbors = current.getNeighbors(this.grid, this.size);
       if (neighbors.size() == 0) {
         boolean found = false;
 
         hunt: for (int y = 0; y < size; y++) {
           for (int x = 0; x < size; x++) {
-            Node currentNode = grid[x][y];
+            GeneratorNode currentNode = grid[x][y];
             if (!currentNode.visited) {
               neighbors = currentNode.getVisitedNeighbors(this.grid, this.size);
               if (neighbors.size() != 0) {
                 found = true;
-                Node neighbor = neighbors.get((int) Math.floor(Math.random() * neighbors.size()));
+                GeneratorNode neighbor = neighbors.get((int) Math.floor(Math.random() * neighbors.size()));
                 current = currentNode;
                 grid[current.x][current.y].visited = true;
                 grid[neighbor.x][neighbor.y].addChildren(current);
@@ -62,7 +63,7 @@ public class Generator {
 
       } else {
         // Kill
-        Node next = neighbors.get((int) Math.floor(Math.random() * neighbors.size()));
+        GeneratorNode next = neighbors.get((int) Math.floor(Math.random() * neighbors.size()));
         current.addChildren(next);
         current = next;
         grid[current.x][current.y].visited = true;
@@ -83,7 +84,7 @@ public class Generator {
       for (int y = 0; y < this.size; y++) {
         if (this.grid[x][y].visited) {
           maze[x * 2 + 1][y * 2 + 1] = false;
-          for (Node child : grid[x][y].children) {
+          for (GeneratorNode child : grid[x][y].children) {
             if (child.x < x) {
               maze[x * 2][y * 2 + 1] = false;
             }
@@ -103,25 +104,25 @@ public class Generator {
     return maze;
   }
 
-  class Node {
+  class GeneratorNode {
     private int x;
     private int y;
     private boolean visited;
-    private List<Node> children;
+    private List<GeneratorNode> children;
 
-    Node(int x, int y) {
+    GeneratorNode(int x, int y) {
       this.x = x;
       this.y = y;
       this.visited = false;
       this.children = new ArrayList<>();
     }
 
-    public void addChildren(Node node) {
+    public void addChildren(GeneratorNode node) {
       children.add(node);
     }
 
-    public List<Node> getNeighbors(Node[][] grid, int size) {
-      List<Node> neighbors = new ArrayList<Node>();
+    public List<GeneratorNode> getNeighbors(GeneratorNode[][] grid, int size) {
+      List<GeneratorNode> neighbors = new ArrayList<GeneratorNode>();
       if (this.x > 0 && !grid[this.x - 1][this.y].visited) {
         neighbors.add(grid[this.x - 1][this.y]);
       }
@@ -137,8 +138,8 @@ public class Generator {
       return neighbors;
     }
 
-    public List<Node> getVisitedNeighbors(Node[][] grid, int size) {
-      List<Node> neighbors = new ArrayList<Node>();
+    public List<GeneratorNode> getVisitedNeighbors(GeneratorNode[][] grid, int size) {
+      List<GeneratorNode> neighbors = new ArrayList<GeneratorNode>();
       if (this.x > 0 && grid[this.x - 1][this.y].visited) {
         neighbors.add(grid[this.x - 1][this.y]);
       }

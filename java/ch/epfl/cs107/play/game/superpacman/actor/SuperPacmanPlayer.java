@@ -1,5 +1,6 @@
 package ch.epfl.cs107.play.game.superpacman.actor;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class SuperPacmanPlayer extends Player {
   private Sprite[][] spriteSheets = new Sprite[4][4];
   private Animation[] pacmanAnimations = new Animation[4];
 
-  private final static int ANIMATION_DURATION = 6;
+  private final static int ANIMATION_DURATION = 1;
   private final static int BONUS_DURAION = 10;
   public final static int MAX_LIFE = 5;
 
@@ -72,7 +73,7 @@ public class SuperPacmanPlayer extends Player {
     }
 
     if (invulnerable) {
-      hud.setGUI((int) (bonusTimer / 2), score);
+      hud.setGUI((int) (bonusTimer / 2 + 1), score);
     } else {
       hud.setGUI(life, score);
     }
@@ -141,7 +142,7 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public List<DiscreteCoordinates> getFieldOfViewCells() {
-    return null;
+    return new ArrayList<DiscreteCoordinates>(); // TODO fix this
   }
 
   @Override
@@ -151,7 +152,7 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public boolean wantsViewInteraction() {
-    return false;
+    return true;
   }
 
   @Override

@@ -13,6 +13,7 @@ import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
+import ch.epfl.cs107.play.game.superpacman.handler.GhostInteractionVisitor;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 
 abstract public class Ghost extends MovableAreaEntity {
@@ -110,7 +111,7 @@ abstract public class Ghost extends MovableAreaEntity {
 
   @Override
   final public boolean isViewInteractable() {
-    return false;
+    return true;
   }
 
   @Override
@@ -126,11 +127,17 @@ abstract public class Ghost extends MovableAreaEntity {
   @Override
   public void acceptInteraction(AreaInteractionVisitor v) {
     ((SuperPacmanInteractionVisitor) v).interactWith(this);
-    // TODO View interaction
   }
 
   @Override
   public List<DiscreteCoordinates> getCurrentCells() {
     return Collections.singletonList(getCurrentMainCellCoordinates());
+  }
+
+  private class GhostHandler implements GhostInteractionVisitor {
+    @Override
+    public void interactWith(SuperPacmanPlayer player) {
+      // TODO Auto-generated method stub
+    }
   }
 }
