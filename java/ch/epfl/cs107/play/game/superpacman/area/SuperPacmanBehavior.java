@@ -1,7 +1,10 @@
 package ch.epfl.cs107.play.game.superpacman.area;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import ch.epfl.cs107.play.game.actor.Entity;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
 import ch.epfl.cs107.play.game.areagame.AreaGraph;
@@ -20,6 +23,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RandomGenerator;
 import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.math.Vector;
+import ch.epfl.cs107.play.signal.logic.Logic;
 
 public class SuperPacmanBehavior extends AreaBehavior {
   public enum SuperPacmanCellType {
@@ -105,17 +109,22 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
     int xRandom;
     int yRandom;
-    SuperPacmanCell currentCell;
+    SuperPacmanCell currentCell = null;
     boolean wall = false;
 
     do {
-      xRandom = r.ints(1, min, max).findFirst().getAsInt() + center.x;
-      yRandom = r.ints(1, min, max).findFirst().getAsInt() + center.y;
+      do {
+        xRandom = r.ints(1, min, max).findFirst().getAsInt() + center.x;
+      } while (xRandom < 0 || xRandom >= width);
+      do {
+        yRandom = r.ints(1, min, max).findFirst().getAsInt() + center.y;
+      } while (yRandom < 0 || yRandom >= height);
       currentCell = (SuperPacmanCell) getCell(xRandom, yRandom);
-      wall = (currentCell.getType() == SuperPacmanCellType.WALL);
-    } while (wall || xRandom < 0 || yRandom < 0 || xRandom > getWidth() || yRandom > height);
+      wall = currentCell.getType() == SuperPacmanCellType.WALL;
+    } while (wall);
 
     return currentCell.getCurrentCells().get(0);
+
   }
 
   public DiscreteCoordinates getRandomFreePoint() {
@@ -126,11 +135,15 @@ public class SuperPacmanBehavior extends AreaBehavior {
     boolean wall = false;
 
     do {
-      xRandom = r.nextInt(width);
-      yRandom = r.nextInt(height);
+      do {
+        xRandom = r.nextInt(width);
+      } while (xRandom < 0 || xRandom > width);
+      do {
+        yRandom = r.nextInt(height);
+      } while (yRandom < 0 || yRandom > height);
       currentCell = (SuperPacmanCell) getCell(xRandom, yRandom);
       wall = (currentCell.getType() == SuperPacmanCellType.WALL);
-    } while (wall || xRandom < 0 || yRandom < 0 || xRandom > width || yRandom > height);
+    } while (wall);
 
     return currentCell.getCurrentCells().get(0);
   }

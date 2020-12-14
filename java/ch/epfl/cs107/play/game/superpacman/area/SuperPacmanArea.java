@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.superpacman.area;
 
 import java.util.Queue;
 
+import ch.epfl.cs107.play.game.actor.Entity;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 import ch.epfl.cs107.play.io.FileSystem;
@@ -11,7 +12,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
 abstract public class SuperPacmanArea extends Area implements Logic {
-  protected SuperPacmanBehavior behavior;
+  private SuperPacmanBehavior behavior;
   private boolean ghostsScared = false;
   private boolean diamondsCollected = false;
   private DiscreteCoordinates playerPosition;
@@ -74,4 +75,9 @@ abstract public class SuperPacmanArea extends Area implements Logic {
   }
 
   abstract public DiscreteCoordinates getRespawnPoint();
+
+  public void setGraphSignal(Entity entity, Logic signal) {
+    behavior.graph.setSignal(entity.getPosition().toDiscreteCoordinates(), signal);
+  }
+
 }

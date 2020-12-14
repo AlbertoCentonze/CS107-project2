@@ -15,7 +15,6 @@ import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
@@ -127,7 +126,9 @@ public class SuperPacmanPlayer extends Player {
   }
 
   public void loseLife() {
+    getOwnerArea().leaveAreaCells(this, getEnteredCells());
     setCurrentPosition(((SuperPacmanArea) getOwnerArea()).getRespawnPoint().toVector());
+    getOwnerArea().enterAreaCells(this, getCurrentCells());
     resetMotion();
     life -= 1;
   }

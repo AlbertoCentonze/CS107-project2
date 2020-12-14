@@ -12,6 +12,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 
 public class Gate extends AreaEntity {
   Sprite gateSprite;
@@ -22,6 +23,7 @@ public class Gate extends AreaEntity {
     gateSprite = new Sprite("superpacman/gate", 1.f, 1.f, this,
         new RegionOfInterest(0, axis == Axis.HORIZONTAL ? 64 : 0, 64, 64));
     this.isOpen = isOpen;
+    ((SuperPacmanArea) getOwnerArea()).setGraphSignal(this, isOpen);
   }
 
   @Override
