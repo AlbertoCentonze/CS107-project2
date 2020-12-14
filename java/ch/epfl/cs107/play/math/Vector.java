@@ -241,15 +241,6 @@ public final class Vector implements Serializable {
         return new Vector(x * (1.0f - factor) + other.x * factor, y * (1.0f - factor) + other.y * factor);
     }
 
-    /**
-     * Convert the vector into a DiscreteCoordinates instance.
-     * @return (DiscreteCoordinates): corresponding coordinates, not null
-     */
-    public DiscreteCoordinates toDiscreteCoordinates(){
-      return new DiscreteCoordinates((int) this.x, (int)this.y);
-    };
-
-
     /// Vector implements Serializable
 
     @Override

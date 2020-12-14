@@ -25,6 +25,7 @@ public class Level1 extends SuperPacmanArea {
     super.createArea();
     registerActor(new Background(this));
 
+    // TODO fix array mess
     exitDoor = new Door(NEXT_LEVEL, Level2.PLAYER_SPAWN_POSITION, Logic.TRUE, this, Orientation.DOWN,
         new DiscreteCoordinates(14, 0), new DiscreteCoordinates(15, 0));
     registerActor(exitDoor);

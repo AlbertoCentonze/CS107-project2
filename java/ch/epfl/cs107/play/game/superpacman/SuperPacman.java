@@ -13,6 +13,7 @@ import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 public class SuperPacman extends RPG {
   private SuperPacmanPlayer player;
 
+  /** Loads the instances of the levels in the game */
   private void createAreas() {
     addArea(new Level0());
     addArea(new Level1());

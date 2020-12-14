@@ -12,6 +12,12 @@ import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor
 public class Key extends CollectableAreaEntity implements Logic {
   Sprite bonusSprite;
 
+  /**
+   * Default constructor for Inky
+   * 
+   * @param area     (Area): area of the ghost
+   * @param position (Position): position where the ghost has to be spawned
+   */
   public Key(Area area, DiscreteCoordinates position) {
     super(area, position);
     bonusSprite = new Sprite("superpacman/key", 1.f, 1.f, this);

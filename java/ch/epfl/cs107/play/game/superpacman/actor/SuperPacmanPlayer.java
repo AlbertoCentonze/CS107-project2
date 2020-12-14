@@ -125,6 +125,7 @@ public class SuperPacmanPlayer extends Player {
     }
   }
 
+  /** Handle the respawn of the player when it gets eaten by a ghost */
   public void loseLife() {
     getOwnerArea().leaveAreaCells(this, getEnteredCells());
     setCurrentPosition(((SuperPacmanArea) getOwnerArea()).getRespawnPoint().toVector());
@@ -133,6 +134,12 @@ public class SuperPacmanPlayer extends Player {
     life -= 1;
   }
 
+  /**
+   * Getter for the invulnerability of the player
+   * 
+   * @return (boolean): true if the player is invulnerable
+   *
+   */
   public boolean isInvulnerable() {
     return invulnerable;
   }
@@ -207,7 +214,6 @@ public class SuperPacmanPlayer extends Player {
     @Override
     public void interactWith(Cherry cherry) {
       score += Cherry.VALUE;
-      System.out.println("cherry");
     }
 
     @Override

@@ -17,9 +17,10 @@ abstract public class SuperPacmanArea extends Area implements Logic {
   private boolean diamondsCollected = false;
   private DiscreteCoordinates playerPosition;
 
+  /** Creates the area by initializing its corresponding behavior */
   protected void createArea() {
     behavior.registerActors(this);
-  };
+  }
 
   @Override
   public boolean begin(Window window, FileSystem fileSystem) {
@@ -33,20 +34,43 @@ abstract public class SuperPacmanArea extends Area implements Logic {
     return false;
   }
 
+  /**
+   * Getter to know if the ghosts have to run away
+   * 
+   * @return (boolean): true if the ghosts are scared
+   */
   public boolean isGhostsScared() {
     return ghostsScared;
   }
 
+  /**
+   * Getter to know the position of the player
+   * 
+   * @return (DiscreteCoordinates): Coordinates of the player
+   */
   public DiscreteCoordinates getPlayerPosition() {
     return playerPosition;
   }
 
+  /**
+   * Side effect that lets the area now various informations that need to be
+   * shared between entities
+   * 
+   * @param player (SuperPacmanPlayer): the player
+   */
   public void updateAreaState(SuperPacmanPlayer player) {
     diamondsCollected = player.getCollectedDiamonds() == behavior.totalDiamonds;
     ghostsScared = player.isInvulnerable();
     playerPosition = (player.getCurrentCells().get(0));
   }
 
+  /**
+   * getter to obtain a path from areagraph
+   * 
+   * @param from (DiscreteCoordinates): starting point
+   * @param to   (DiscreteCoordinates): target point
+   * @return (Queue<Orientation>): List of the direction to reach the objective
+   */
   public Queue<Orientation> getPath(DiscreteCoordinates from, DiscreteCoordinates to) {
     return behavior.graph.shortestPath(from, to);
   }
@@ -66,18 +90,41 @@ abstract public class SuperPacmanArea extends Area implements Logic {
     return diamondsCollected ? 1 : 0;
   }
 
+  /**
+   * Getter to access a random point in range
+   * 
+   * @param center (DiscreteCoordinates): the center of the square
+   * @param radius (int): half the length of the square's sides
+   * @return (DiscreteCoordinates): The coordinates of the random point
+   */
   public DiscreteCoordinates getReachableRandomPointInRadius(DiscreteCoordinates center, int radius) {
     return behavior.getRandomFreePoint(center, radius);
   }
 
+  /**
+   * Getter to access a random point in range
+   * 
+   * @return (DiscreteCoordinates): The coordinates of the random point
+   */
   public DiscreteCoordinates getReachableRandomPointInRadius() {
     return behavior.getRandomFreePoint();
   }
 
+  /**
+   * Getter for the respawnPoint of the player
+   * 
+   * @return (DiscreteCoordinates): the point where the player has to respawn
+   */
   abstract public DiscreteCoordinates getRespawnPoint();
 
+  /**
+   * Setter to change the signal of a node
+   * 
+   * @param entity (Entity): entity from which you want to take the coordinates
+   * @param signal (Logic): connected signal that you want to link to the entity
+   */
   public void setGraphSignal(Entity entity, Logic signal) {
-    behavior.graph.setSignal(entity.getPosition().toDiscreteCoordinates(), signal);
+    behavior.graph.setSignal(new DiscreteCoordinates(entity.getPosition()), signal);
   }
 
 }

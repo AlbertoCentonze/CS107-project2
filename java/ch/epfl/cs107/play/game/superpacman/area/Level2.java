@@ -14,6 +14,7 @@ public class Level2 extends SuperPacmanArea {
   List<Gate> gates;
   List<Key> keys;
 
+  /** Default constructor for Level2 */
   public Level2() {
     super();
     gates = new ArrayList<Gate>();
@@ -59,6 +60,7 @@ public class Level2 extends SuperPacmanArea {
     return 30.f;
   }
 
+  @Override
   public DiscreteCoordinates getRespawnPoint() {
     return PLAYER_SPAWN_POSITION;
   }

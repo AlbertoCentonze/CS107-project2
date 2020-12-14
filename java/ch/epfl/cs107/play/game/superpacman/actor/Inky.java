@@ -12,6 +12,12 @@ public class Inky extends GhostPathfinder {
   private static final int MAX_DISTANCE_NOT_SCARED = 8;
   private static final int SPEED_WHEN_SCARED = 10;
 
+  /**
+   * Default constructor for Inky
+   * 
+   * @param area     (Area): area of the ghost
+   * @param position (Position): position where the ghost has to be spawned
+   */
   public Inky(Area area, DiscreteCoordinates position) {
     super(area, position, "inky");
   }

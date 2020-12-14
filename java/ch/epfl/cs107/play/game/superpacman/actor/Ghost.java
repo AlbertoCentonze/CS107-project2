@@ -25,6 +25,13 @@ abstract public class Ghost extends MovableAreaEntity {
 
   private int ghostCurrentSpeed;
 
+  /**
+   * Default constructor for a ghost
+   * 
+   * @param area      (Area): area of the ghost
+   * @param position  (Position): position where the ghost has to be spawned
+   * @param ghostType (String): name of the ghost
+   */
   public Ghost(Area area, DiscreteCoordinates position, String ghostType) {
     super(area, Orientation.UP, position);
     this.respawnPoint = position;
@@ -38,6 +45,12 @@ abstract public class Ghost extends MovableAreaEntity {
     afraidAnimation = new Animation(3, afraidSpritesheet);
   }
 
+  /**
+   * Getter for the new orientation to follow according to the behavior of the
+   * ghost
+   * 
+   * @return (Orientation): the next orientation
+   */
   protected abstract Orientation getNextOrientation();
 
   @Override
@@ -93,14 +106,25 @@ abstract public class Ghost extends MovableAreaEntity {
       }
   }
 
+  /**
+   * Getter to know if the ghost has to run away
+   * 
+   * @return (boolean): true if the ghost is scared
+   */
   protected boolean isScared() {
     return ((SuperPacmanArea) getOwnerArea()).isGhostsScared();
   }
 
+  /**
+   * Speed setter for the ghosts
+   * 
+   * @param newSpeed (int): value of the speed
+   */
   protected void setSpeed(int newSpeed) {
     this.ghostCurrentSpeed = newSpeed;
   }
 
+  /** handle the respawn of the ghost when the player eats him */
   public void respawn() {
     getOwnerArea().leaveAreaCells(this, getEnteredCells());
     setCurrentPosition(respawnPoint.toVector());

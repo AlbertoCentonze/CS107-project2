@@ -9,28 +9,34 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.game.areagame.actor.Path;
-import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 
+/** Superclass of ghosts that adds pathfinding capabilities to it */
 public abstract class GhostPathfinder extends Ghost implements Interactor {
   final static int SIGHT_RADIUS = 5;
   protected Queue<Orientation> path;
   private boolean playerSeen = false;
-  private Path graphicPath; // TODO DEBUG
+  // private Path graphicPath; // TODO DEBUG
   private GhostState previousState;
   private GhostState currentState;
 
   private GhostHandler handler;
 
+  /**
+   * Default constructor for a ghost that has to be able to look for the player
+   * intelligently
+   * 
+   * @param area      (Area): area of the ghost
+   * @param position  (Position): position where the ghost has to be spawned
+   * @param ghostType (String): name of the ghost
+   */
   public GhostPathfinder(Area area, DiscreteCoordinates position, String ghostType) {
     super(area, position, ghostType);
     handler = new GhostHandler();
   }
-
-  // abstract public DiscreteCoordinates getTarget();
 
   @Override
   protected Orientation getNextOrientation() {
@@ -43,12 +49,14 @@ public abstract class GhostPathfinder extends Ghost implements Interactor {
       newDirection = Orientation.pickRandomly();
     }
 
-    if (path != null) // TODO DEBUG
-      graphicPath = new Path(this.getPosition(), new LinkedList<Orientation>(path));
+    // if (path != null) // TODO DEBUG
+    // graphicPath = new Path(this.getPosition(), new
+    // LinkedList<Orientation>(path));
 
     return newDirection;
   }
 
+  /** A method that updates the path according to the state of the ghost */
   private void updatePath() {
     if (path == null) {
       path = new LinkedList<>();
@@ -123,16 +131,36 @@ public abstract class GhostPathfinder extends Ghost implements Interactor {
     other.acceptInteraction(handler);
   }
 
+  /**
+   * Method that computes the path that the ghost has to follow when it's scared
+   * 
+   * @return (Queue<Orientation>): The list of directions that the ghost has to
+   *         follow to reach the target
+   */
   abstract protected Queue<Orientation> getPathScared();
 
+  /**
+   * Method that computes the path that the ghost has to follow he's looking for
+   * the player
+   * 
+   * @return (Queue<Orientation>): The list of directions that the ghost has to
+   *         follow to reach the target
+   */
   abstract protected Queue<Orientation> getPathWaiting();
 
+  /**
+   * Method that computes the path that the ghost has to follow when it's chasing
+   * the player
+   * 
+   * @return (Queue<Orientation>): The list of directions that the ghost has to
+   *         follow to reach the target
+   */
   abstract protected Queue<Orientation> getPathChasing();
 
   @Override
   public void draw(Canvas canvas) {
-    if (graphicPath != null)
-      graphicPath.draw(canvas);
+    // TODO DEBUG if (graphicPath != null)
+    // TODO DEBUG graphicPath.draw(canvas);
 
     super.draw(canvas);
   }
@@ -143,10 +171,15 @@ public abstract class GhostPathfinder extends Ghost implements Interactor {
     super.respawn();
   }
 
+  /** extremely basic state machine to manage ghosts states in the pathfinding */
   private enum GhostState {
     SCARED, WANDERING, CHASING
   }
 
+  /**
+   * Interaction handler for Ghosts to check if the player is in their
+   * SIGHT_RADIUS
+   */
   private class GhostHandler implements SuperPacmanInteractionVisitor {
     @Override
     public void interactWith(Ghost ghost) {

@@ -30,6 +30,14 @@ public final class DiscreteCoordinates implements Serializable {
         this.x = x;
         this.y = y;
     }
+/**
+     * Coordinate constructor from a vector. The components are converted to int
+     * @param position (vector): the vector that rappresents the coordinates
+     */
+    public DiscreteCoordinates(Vector position){
+      this.x = (int) position.x;
+      this.y = (int) position.y;
+    }
 
     /** @return (DiscreteCoordinates): one coordinate left */
     public DiscreteCoordinates left(){

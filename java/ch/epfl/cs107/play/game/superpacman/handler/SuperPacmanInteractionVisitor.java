@@ -10,7 +10,7 @@ import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 
 public interface SuperPacmanInteractionVisitor extends RPGInteractionVisitor {
   /**
-   * Simulate and interaction between Interactor and a Player
+   * Interaction between Interactor and a Player
    * 
    * @param player (Player), not null
    */
@@ -18,22 +18,47 @@ public interface SuperPacmanInteractionVisitor extends RPGInteractionVisitor {
     // by default the interaction is empty
   }
 
+  /**
+   * Interaction between Interactor and a Cherry
+   * 
+   * @param cherry (Cherry), not null
+   */
   default void interactWith(Cherry cherry) {
     // by default the interaction is empty
   }
 
+  /**
+   * Interaction between Interactor and a Diamond
+   * 
+   * @param diamond (Diamond), not null
+   */
   default void interactWith(Diamond diamond) {
     // by default the interaction is empty
   }
 
+  /**
+   * Interaction between Interactor and a Bonus
+   * 
+   * @param bonus (Bonus), not null
+   */
   default void interactWith(Bonus bonus) {
     // by default the interaction is empty
   }
 
+  /**
+   * Interaction between Interactor and a Key
+   * 
+   * @param key (Key), not null
+   */
   default void interactWith(Key key) {
     // by default the interaction is empty
   }
 
+  /**
+   * Interaction between Interactor and a Ghost
+   * 
+   * @param ghost (Ghost), not null
+   */
   default void interactWith(Ghost ghost) {
     // by default the interaction is empty
   }
