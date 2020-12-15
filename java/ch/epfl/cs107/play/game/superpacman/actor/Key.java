@@ -13,10 +13,10 @@ public class Key extends CollectableAreaEntity implements Logic {
   Sprite bonusSprite;
 
   /**
-   * Default constructor for Inky
+   * Default constructor for Key
    * 
-   * @param area     (Area): area of the ghost
-   * @param position (Position): position where the ghost has to be spawned
+   * @param area     (Area): area of the key
+   * @param position (Position): position where the key has to be spawned
    */
   public Key(Area area, DiscreteCoordinates position) {
     super(area, position);

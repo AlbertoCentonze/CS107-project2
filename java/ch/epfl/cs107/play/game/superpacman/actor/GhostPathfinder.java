@@ -8,7 +8,6 @@ import java.util.List;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
-import ch.epfl.cs107.play.game.areagame.actor.Path;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Interactor;
@@ -42,9 +41,9 @@ public abstract class GhostPathfinder extends Ghost implements Interactor {
   protected Orientation getNextOrientation() {
     Orientation newDirection;
 
-    try {
+    if (path != null && path.size() != 0)
       newDirection = path.poll();
-    } catch (NullPointerException e) {
+    else {
       System.out.println("Error in the pathfinding");
       newDirection = Orientation.pickRandomly();
     }
@@ -54,6 +53,7 @@ public abstract class GhostPathfinder extends Ghost implements Interactor {
     // LinkedList<Orientation>(path));
 
     return newDirection;
+
   }
 
   /** A method that updates the path according to the state of the ghost */
@@ -96,17 +96,23 @@ public abstract class GhostPathfinder extends Ghost implements Interactor {
 
   @Override
   public List<DiscreteCoordinates> getFieldOfViewCells() {
-    DiscreteCoordinates point = new DiscreteCoordinates((int) getPosition().x, (int) getPosition().y);
+    // Center of the square
+    DiscreteCoordinates point = new DiscreteCoordinates(getPosition());
+    // Radius of the square
     int radius = SIGHT_RADIUS;
+    // Bounds of the area
     int height = getOwnerArea().getHeight();
     int width = getOwnerArea().getWidth();
+    // Empty List that will contain the cells in the field of view
     List<DiscreteCoordinates> fieldOfView = new ArrayList<DiscreteCoordinates>();
 
+    // Cordinates in the radius that are not out of bound
     int minX = (point.x - radius) < 0 ? 0 : point.x - radius;
     int maxX = (point.x + radius) > width ? width : point.x + radius;
     int minY = (point.y - radius) < 0 ? 0 : point.y - radius;
     int maxY = (point.y + radius) > height ? height : point.x + radius;
 
+    // Add each coordinate in the radius
     for (int i = minX; i < maxX; ++i) {
       for (int j = minY; j < maxY; ++j) {
         fieldOfView.add(new DiscreteCoordinates(i, j));

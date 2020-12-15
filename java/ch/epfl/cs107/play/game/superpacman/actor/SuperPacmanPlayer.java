@@ -21,12 +21,11 @@ import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 
 public class SuperPacmanPlayer extends Player {
-  private Sprite[][] spriteSheets = new Sprite[4][4];
-  private Animation[] pacmanAnimations = new Animation[4];
-
   private final static int ANIMATION_DURATION = 6;
   private final static int BONUS_DURAION = 10;
   public final static int MAX_LIFE = 5;
+
+  Animation[] pacmanAnimations = new Animation[4];
 
   private int score = 0;
   private int life = 3;
@@ -35,14 +34,22 @@ public class SuperPacmanPlayer extends Player {
   public boolean invulnerable = false;
   public float bonusTimer;
 
-  private SuperPacmanPlayerHandler handler = new SuperPacmanPlayerHandler();
-  private SuperPacmanStatusGUI hud = new SuperPacmanStatusGUI();
+  private SuperPacmanPlayerHandler handler;
+  private SuperPacmanStatusGUI hud;
 
+  /**
+   * SuperPacmanPlayer defautl constructor
+   * 
+   * @param ownerArea (Area): the area where the player has to be in
+   * @param position  (DiscreteCoordinates): the initial position of the player
+   */
   public SuperPacmanPlayer(Area ownerArea, DiscreteCoordinates position) {
     super(ownerArea, Orientation.RIGHT, position);
-    spriteSheets = RPGSprite.extractSprites("superpacman/pacman", 4, 1.f, 1.f, this, 64, 64,
+    Sprite[][] spriteSheets = RPGSprite.extractSprites("superpacman/pacman", 4, 1.f, 1.f, this, 64, 64,
         new Orientation[] { Orientation.DOWN, Orientation.LEFT, Orientation.UP, Orientation.RIGHT });
     pacmanAnimations = Animation.createAnimations(3, spriteSheets);
+    handler = new SuperPacmanPlayerHandler();
+    hud = new SuperPacmanStatusGUI();
     resetMotion();
   }
 
@@ -68,13 +75,15 @@ public class SuperPacmanPlayer extends Player {
         }
       }
     }
+
+    // Update the frame of each animation
     for (Animation anim : pacmanAnimations) {
       anim.update(deltaTime);
     }
 
-    if (invulnerable) {
+    if (invulnerable) {// Animate the GUI to show how long the player is going to be invulnerable
       hud.setGUI((int) (bonusTimer / 2 + 1), score);
-    } else {
+    } else { // Updates the gui
       hud.setGUI(life, score);
     }
 
@@ -151,7 +160,7 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public List<DiscreteCoordinates> getFieldOfViewCells() {
-    return new ArrayList<DiscreteCoordinates>(); // TODO fix this
+    return new ArrayList<DiscreteCoordinates>();
   }
 
   @Override
@@ -171,7 +180,7 @@ public class SuperPacmanPlayer extends Player {
 
   @Override
   public boolean takeCellSpace() {
-    return true;
+    return false;
   }
 
   @Override
@@ -189,6 +198,12 @@ public class SuperPacmanPlayer extends Player {
     ((SuperPacmanInteractionVisitor) v).interactWith(this);
   }
 
+  /**
+   * Getter for the number of diamonds collected by the player in the current
+   * stage
+   * 
+   * @return (int): number of diamonds collected
+   */
   public int getCollectedDiamonds() {
     return collectedDiamonds;
   }
@@ -222,6 +237,7 @@ public class SuperPacmanPlayer extends Player {
       bonusTimer = BONUS_DURAION;
     }
 
+    @Override
     public void interactWith(Ghost ghost) {
       if (invulnerable) {
         score += Ghost.SCORE;

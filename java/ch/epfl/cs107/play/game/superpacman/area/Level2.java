@@ -56,11 +56,6 @@ public class Level2 extends SuperPacmanArea {
   }
 
   @Override
-  public float getCameraScaleFactor() {
-    return 30.f;
-  }
-
-  @Override
   public DiscreteCoordinates getRespawnPoint() {
     return PLAYER_SPAWN_POSITION;
   }

@@ -12,6 +12,12 @@ public class Diamond extends CollectableAreaEntity {
   public static final int VALUE = 10;
   Sprite diamondSprite;
 
+  /**
+   * Default constructor for Diamond
+   * 
+   * @param area     (Area): area of the diamond
+   * @param position (Position): position where the diamond has to be spawned
+   */
   public Diamond(Area area, DiscreteCoordinates position) {
     super(area, position);
     diamondSprite = new Sprite("superpacman/diamond", 1f, 1f, this);

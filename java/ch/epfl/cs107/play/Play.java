@@ -1,7 +1,5 @@
 package ch.epfl.cs107.play;
 
-import java.awt.GraphicsEnvironment;
-
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
 import ch.epfl.cs107.play.game.hyperpacman.HyperPacman;
@@ -9,7 +7,6 @@ import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.io.DefaultFileSystem;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.io.ResourceFileSystem;
-import ch.epfl.cs107.play.io.XMLTexts;
 import ch.epfl.cs107.play.recorder.RecordReplayer;
 import ch.epfl.cs107.play.recorder.Recorder;
 import ch.epfl.cs107.play.window.Window;

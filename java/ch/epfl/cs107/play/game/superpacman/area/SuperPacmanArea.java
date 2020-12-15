@@ -8,6 +8,7 @@ import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
+import ch.epfl.cs107.play.game.areagame.actor.Background;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
@@ -20,6 +21,12 @@ abstract public class SuperPacmanArea extends Area implements Logic {
   /** Creates the area by initializing its corresponding behavior */
   protected void createArea() {
     behavior.registerActors(this);
+    registerActor(new Background(this));
+  }
+
+  @Override
+  public float getCameraScaleFactor() {
+    return 25.f;
   }
 
   @Override

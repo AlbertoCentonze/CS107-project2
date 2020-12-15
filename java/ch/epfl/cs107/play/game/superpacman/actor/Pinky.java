@@ -12,7 +12,7 @@ public class Pinky extends GhostPathfinder {
   public static final int MIN_AFRAID_DISTANCE = 5;
 
   /**
-   * Default constructor for Inky
+   * Default constructor for Pinky
    * 
    * @param area     (Area): area of the ghost
    * @param position (Position): position where the ghost has to be spawned

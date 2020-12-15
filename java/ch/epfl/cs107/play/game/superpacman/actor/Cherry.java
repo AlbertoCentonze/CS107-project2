@@ -12,6 +12,12 @@ public class Cherry extends CollectableAreaEntity {
   public static final int VALUE = 200;
   Sprite cherrySprite;
 
+  /**
+   * Default constructor for Cherry
+   * 
+   * @param area     (Area): area of the cherry
+   * @param position (Position): position where the cherry has to be spawned
+   */
   public Cherry(Area area, DiscreteCoordinates position) {
     super(area, position);
     cherrySprite = new Sprite("superpacman/cherry", 1.f, 1.f, this);

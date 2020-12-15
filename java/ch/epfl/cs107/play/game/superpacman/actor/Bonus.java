@@ -13,12 +13,17 @@ import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor
 public class Bonus extends CollectableAreaEntity {
   final static int BONUS_DURATION = 10;
 
-  Sprite[] bonusSpritesheet = new Sprite[4];
   Animation bonusAnimation;
 
+  /**
+   * Default constructor for Bonus
+   * 
+   * @param area     (Area): area of the bonus
+   * @param position (Position): position where the bonus has to be spawned
+   */
   public Bonus(Area area, DiscreteCoordinates position) {
     super(area, position);
-    bonusSpritesheet = RPGSprite.extractSprites("superpacman/coin", 4, 1.f, 1.f, this, 16, 16);
+    Sprite[] bonusSpritesheet = RPGSprite.extractSprites("superpacman/coin", 4, 1.f, 1.f, this, 16, 16);
     bonusAnimation = new Animation(6, bonusSpritesheet);
   }
 

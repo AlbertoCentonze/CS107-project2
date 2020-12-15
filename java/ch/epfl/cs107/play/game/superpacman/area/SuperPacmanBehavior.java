@@ -116,12 +116,13 @@ public class SuperPacmanBehavior extends AreaBehavior {
    * @return (boolean): true if the edge of the cell checked doesn't have a wall
    */
   private boolean isEdgeFree(DiscreteCoordinates point, Orientation orientation) {
-    Vector edgeVector = point.toVector().add(orientation.toVector());
-    try {
-      SuperPacmanCellType edgeType = ((SuperPacmanCell) getCell((int) edgeVector.x, (int) edgeVector.y)).type;
-      return edgeType != SuperPacmanCellType.WALL;
-    } catch (ArrayIndexOutOfBoundsException e) {
+    DiscreteCoordinates edgeCoordinates = new DiscreteCoordinates(point.toVector().add(orientation.toVector()));
+
+    if (edgeCoordinates.x < 0 || edgeCoordinates.y < 0 || edgeCoordinates.x >= width || edgeCoordinates.y >= height)
       return false;
+    else {
+      SuperPacmanCellType edgeType = ((SuperPacmanCell) getCell(edgeCoordinates.x, edgeCoordinates.y)).type;
+      return edgeType != SuperPacmanCellType.WALL;
     }
   }
 

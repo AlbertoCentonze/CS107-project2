@@ -26,15 +26,14 @@ public class SuperPacmanStatusGUI implements Graphics {
     this.score = score;
   }
 
-  // TODO fix position
   @Override
   public void draw(Canvas canvas) {
     float width = canvas.getScaledWidth();
     float height = canvas.getScaledHeight();
     Vector anchor = canvas.getTransform().getOrigin().sub(new Vector(width / 2, height / 2));
 
-    scoreGraphics = new TextGraphics(Integer.toString((int) score), 1.f, Color.YELLOW, Color.BLACK, 0.025f, false,
-        false, anchor);
+    scoreGraphics = new TextGraphics("SCORE: " + Integer.toString((int) score), 1.f, Color.YELLOW, Color.BLACK, 0.025f,
+        false, false, anchor.add(new Vector(8, height - 1.2f)));
 
     for (int i = 0; i < SuperPacmanPlayer.MAX_LIFE; ++i) {
       boolean yellow = i < currentLife ? true : false;
