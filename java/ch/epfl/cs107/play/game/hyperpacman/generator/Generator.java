@@ -2,6 +2,10 @@ package ch.epfl.cs107.play.game.hyperpacman.generator;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class Generator {
   // TODO DEBUG METHOD MAIN DELETE
@@ -153,6 +157,27 @@ public class Generator {
         neighbors.add(grid[this.x][this.y + 1]);
       }
       return neighbors;
+    }
+  }
+
+  public static void arrayToImage(boolean[][] data) {
+    int height = data.length;
+    int width = data[0].length;
+    BufferedImage outImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        if (data[i][j]) {
+          outImage.setRGB(j, i, 0x00000000);
+        } else {
+          outImage.setRGB(j, i, 0xffffffff);
+        }
+      }
+    }
+    try {
+      // Save as PNG
+      File file = new File("res/images/behaviors/superpacman/random.png");
+      ImageIO.write(outImage, "png", file);
+    } catch (IOException e) {
     }
   }
 }

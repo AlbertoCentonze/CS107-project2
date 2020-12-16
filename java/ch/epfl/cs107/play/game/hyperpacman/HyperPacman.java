@@ -1,29 +1,16 @@
 package ch.epfl.cs107.play.game.hyperpacman;
 
-import java.util.Collections;
 import java.util.List;
 
 import ch.epfl.cs107.play.game.areagame.Area;
-import ch.epfl.cs107.play.game.areagame.actor.Animation;
+import ch.epfl.cs107.play.game.areagame.AreaGame;
 import ch.epfl.cs107.play.game.hyperpacman.area.HyperPacmanArea;
-import ch.epfl.cs107.play.game.rpg.RPG;
-import ch.epfl.cs107.play.game.rpg.actor.Player;
-import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
-import ch.epfl.cs107.play.game.superpacman.area.Level0;
-import ch.epfl.cs107.play.game.superpacman.area.Level1;
-import ch.epfl.cs107.play.game.superpacman.area.Level2;
 import ch.epfl.cs107.play.io.FileSystem;
-import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
-import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 
-public class HyperPacman extends RPG {
-  private SuperPacmanPlayer player;
-
-  List<SuperPacmanArea> levels;
-
+public class HyperPacman extends AreaGame {
   private void createAreas() {
-    addArea(new HyperPacmanArea());
+    addArea(new HyperPacmanArea(25));
   }
 
   @Override
@@ -31,9 +18,7 @@ public class HyperPacman extends RPG {
 
     if (super.begin(window, fileSystem)) {
       createAreas();
-      Area area = setCurrentArea("random", true);
-      player = new SuperPacmanPlayer(area, Level0.PLAYER_SPAWN_POSITION);
-      initPlayer(player);
+      Area area = setCurrentArea("superpacman/random", true);
       return true;
     }
     return false;
@@ -42,8 +27,6 @@ public class HyperPacman extends RPG {
   @Override
   public void update(float deltaTime) {
     super.update(deltaTime);
-    SuperPacmanArea area = ((SuperPacmanArea) getCurrentArea());
-    area.updateAreaState(player);
   }
 
   @Override
@@ -52,7 +35,7 @@ public class HyperPacman extends RPG {
 
   @Override
   public String getTitle() {
-    return "Super Pacman";
+    return "Hyper Pacman";
   }
 
 }

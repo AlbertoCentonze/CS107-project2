@@ -33,8 +33,8 @@ public class Play {
     // Create a demo game :
     // (it is expected that at the beginning, the provided file does not compile)
 
-    final Game game = new SuperPacman();
-    // final Game game = new HyperPacman();
+    // final Game game = new SuperPacman();
+    final Game game = new HyperPacman();
 
     // Use Swing display
     final Window window = new SwingWindow(game.getTitle(), fileSystem, 550, 550);

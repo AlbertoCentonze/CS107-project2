@@ -53,11 +53,12 @@ public class SuperPacmanPlayer extends Player {
     resetMotion();
   }
 
-  @Override
-  public void update(float deltaTime) {
-    Area playerArea = getOwnerArea();
-    Keyboard keyboard = playerArea.getKeyboard();
-    boolean canGoForward = playerArea.canEnterAreaCells(this, getNextCurrentCells());
+  /**
+   * Method that take care of the movement of the player (has to be called into
+   * update)
+   */
+  protected void handleMovement() {
+    Keyboard keyboard = getOwnerArea().getKeyboard();
 
     if (!isDisplacementOccurs()) {
       // Listen for directions
@@ -66,6 +67,15 @@ public class SuperPacmanPlayer extends Player {
       moveOrientate(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
       moveOrientate(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
 
+    }
+  }
+
+  @Override
+  public void update(float deltaTime) {
+    handleMovement();
+
+    boolean canGoForward = getOwnerArea().canEnterAreaCells(this, getNextCurrentCells());
+    if (!isDisplacementOccurs()) {
       if (canGoForward) {
         // Move the player according to the current orientation
         move(ANIMATION_DURATION);
@@ -87,6 +97,7 @@ public class SuperPacmanPlayer extends Player {
       hud.setGUI(life, score);
     }
 
+    // Updates the timer
     if (bonusTimer >= 0)
       bonusTimer -= deltaTime;
     else
@@ -105,7 +116,7 @@ public class SuperPacmanPlayer extends Player {
    * @param b           (Button): button corresponding to the given orientation,
    *                    not null
    */
-  private void moveOrientate(Orientation orientation, Button b) {
+  protected void moveOrientate(Orientation orientation, Button b) {
     if (b.isDown() && getOrientation() != orientation)
       orientate(orientation);
 
