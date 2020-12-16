@@ -1,7 +1,5 @@
 package ch.epfl.cs107.play.game.hyperpacman;
 
-import java.util.List;
-
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaGame;
 import ch.epfl.cs107.play.game.hyperpacman.area.HyperPacmanArea;

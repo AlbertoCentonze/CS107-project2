@@ -2,9 +2,9 @@ package ch.epfl.cs107.play.game.hyperpacman.area;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Background;
-import ch.epfl.cs107.play.game.hyperpacman.actor.HyperPacmanPlayer1;
-import ch.epfl.cs107.play.game.hyperpacman.actor.HyperPacmanPlayer2;
+import ch.epfl.cs107.play.game.hyperpacman.actor.HyperPacmanPlayer;
 import ch.epfl.cs107.play.game.hyperpacman.generator.Generator;
+import ch.epfl.cs107.play.game.superpacman.actor.Key;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
@@ -13,18 +13,17 @@ public class HyperPacmanArea extends Area {
   int size;
   HyperPacmanBehavior behavior;
   Generator mazeGenerator;
-  HyperPacmanPlayer1 player1;
-  HyperPacmanPlayer2 player2;
+  HyperPacmanPlayer player1;
+  HyperPacmanPlayer player2;
+  Key victoryKey;
 
   public HyperPacmanArea(int size) {
     this.size = size;
     mazeGenerator = new Generator(size);
-    player1 = new HyperPacmanPlayer1(this, new DiscreteCoordinates(1, 1));
-    player2 = new HyperPacmanPlayer2(this, new DiscreteCoordinates(size - 2, size - 2));
   }
 
   protected void createArea() {
-    behavior.registerActors(this);
+    behavior.registerActors(this, victoryKey);
     registerActor(new Background(this));
     registerActor(player1);
     registerActor(player2);
@@ -41,6 +40,9 @@ public class HyperPacmanArea extends Area {
       Generator.arrayToImage(mazeGenerator.getMaze());
       behavior = new HyperPacmanBehavior(window, getTitle());
       setBehavior(behavior);
+      victoryKey = new Key(this, new DiscreteCoordinates(getHeight() / 2, getWidth() / 2));
+      player1 = new HyperPacmanPlayer(this, new DiscreteCoordinates(1, 1), false);
+      player2 = new HyperPacmanPlayer(this, new DiscreteCoordinates(size - 2, size - 2), true);
       createArea();
       return true;
     }
@@ -49,6 +51,6 @@ public class HyperPacmanArea extends Area {
 
   @Override
   public float getCameraScaleFactor() {
-    return 40;
+    return 35f;
   }
 }

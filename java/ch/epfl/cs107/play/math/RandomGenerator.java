@@ -15,7 +15,8 @@ public class RandomGenerator {
    * @param probability (float) of being true
    * @return a boolean with a certain probability of being true
    */
-  public boolean getRandomBoolean(float probability) {
+  public static boolean getRandomBoolean(float probability) {
+    instance = new java.util.Random();
     return instance.nextFloat() < probability;
   }
 }

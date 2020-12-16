@@ -1,6 +1,6 @@
 # EPFL - CS107 Project 2
 
-A game inspired from Superpacman built in Java.
+A game inspired from Superpacman built with Java.
 
 ## How to launch the game
 To run the game just launch the main class from Play.java and choose which mode you want to play.

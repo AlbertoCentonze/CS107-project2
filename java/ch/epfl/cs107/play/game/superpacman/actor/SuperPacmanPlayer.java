@@ -25,7 +25,7 @@ public class SuperPacmanPlayer extends Player {
   private final static int BONUS_DURAION = 10;
   public final static int MAX_LIFE = 5;
 
-  Animation[] pacmanAnimations = new Animation[4];
+  protected Animation[] pacmanAnimations = new Animation[4];
 
   private int score = 0;
   private int life = 3;
@@ -34,8 +34,8 @@ public class SuperPacmanPlayer extends Player {
   public boolean invulnerable = false;
   public float bonusTimer;
 
-  private SuperPacmanPlayerHandler handler;
-  private SuperPacmanStatusGUI hud;
+  protected SuperPacmanPlayerHandler handler;
+  protected SuperPacmanStatusGUI hud;
 
   /**
    * SuperPacmanPlayer defautl constructor
@@ -219,7 +219,7 @@ public class SuperPacmanPlayer extends Player {
     return collectedDiamonds;
   }
 
-  private class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
+  protected class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
     @Override
     public void interactWith(SuperPacmanPlayer player) {
     }

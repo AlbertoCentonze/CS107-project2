@@ -1,5 +1,7 @@
 package ch.epfl.cs107.play;
 
+import java.util.Scanner;
+
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
 import ch.epfl.cs107.play.game.hyperpacman.HyperPacman;
@@ -7,8 +9,6 @@ import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.io.DefaultFileSystem;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.io.ResourceFileSystem;
-import ch.epfl.cs107.play.recorder.RecordReplayer;
-import ch.epfl.cs107.play.recorder.Recorder;
 import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.window.swing.SwingWindow;
 
@@ -30,18 +30,28 @@ public class Play {
     // Define cascading file system
     final FileSystem fileSystem = new ResourceFileSystem(DefaultFileSystem.INSTANCE);
 
-    // Create a demo game :
-    // (it is expected that at the beginning, the provided file does not compile)
+    // Selecting gamemode
+    Scanner keyboard = new Scanner(System.in);
+    String[] modeNames = { "SuperPacman", "HyperPacman" };
+    Game[] modes = { new SuperPacman(), new HyperPacman() };
+    System.out.println("Welcome into my game, please select a gamemode");
+    for (int i = 0; i < modeNames.length; ++i)
+      System.out.println((i + 1) + ". " + modeNames[i]);
+
+    int selectedMode;
+    do {
+      System.out.println("Enter the number of the desired gamemode");
+      selectedMode = keyboard.nextInt() - 1;
+    } while (selectedMode < 0 || selectedMode > modes.length);
+    keyboard.close();
 
     // final Game game = new SuperPacman();
-    final Game game = new HyperPacman();
+    final Game game = modes[selectedMode];
 
     // Use Swing display
     final Window window = new SwingWindow(game.getTitle(), fileSystem, 550, 550);
     window.registerFonts(ResourcePath.FONTS);
 
-    Recorder recorder = new Recorder(window);
-    RecordReplayer replayer = new RecordReplayer(window);
     try {
 
       if (game.begin(window, fileSystem)) {

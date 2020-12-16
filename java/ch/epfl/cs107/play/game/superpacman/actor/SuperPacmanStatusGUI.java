@@ -11,12 +11,12 @@ import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
 public class SuperPacmanStatusGUI implements Graphics {
-  ImageGraphics[] lifeGraphics = new ImageGraphics[5];
-  TextGraphics scoreGraphics;
-  private final static int DEPTH = 0;
+  protected ImageGraphics[] lifeGraphics = new ImageGraphics[5];
+  protected TextGraphics scoreGraphics;
+  protected final static int DEPTH = 0;
 
-  private int currentLife;
-  private int score;
+  protected int currentLife;
+  protected int score;
 
   protected SuperPacmanStatusGUI() {
   };
