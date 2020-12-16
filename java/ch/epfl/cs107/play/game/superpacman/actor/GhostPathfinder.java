@@ -15,10 +15,9 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 
 /** Superclass of ghosts that adds pathfinding capabilities to it */
 public abstract class GhostPathfinder extends Ghost implements Interactor {
-  final static int SIGHT_RADIUS = 5;
+  final static int SIGHT_RADIUS = 10;
   protected Queue<Orientation> path;
   private boolean playerSeen = false;
-  // private Path graphicPath; // TODO DEBUG
   private GhostState previousState;
   private GhostState currentState;
 
@@ -48,12 +47,7 @@ public abstract class GhostPathfinder extends Ghost implements Interactor {
       newDirection = Orientation.pickRandomly();
     }
 
-    // if (path != null) // TODO DEBUG
-    // graphicPath = new Path(this.getPosition(), new
-    // LinkedList<Orientation>(path));
-
     return newDirection;
-
   }
 
   /** A method that updates the path according to the state of the ghost */
@@ -64,15 +58,15 @@ public abstract class GhostPathfinder extends Ghost implements Interactor {
 
     switch (currentState) {
       case CHASING:
-        System.out.println("chasing player");
+        // System.out.println("chasing player");
         path = getPathChasing();
         break;
       case SCARED:
-        System.out.println("running away");
+        // System.out.println("running away");
         path = getPathScared();
         break;
       case WANDERING:
-        System.out.println("looking around");
+        // System.out.println("looking around");
         path = getPathWaiting();
         break;
       default:
@@ -165,9 +159,6 @@ public abstract class GhostPathfinder extends Ghost implements Interactor {
 
   @Override
   public void draw(Canvas canvas) {
-    // TODO DEBUG if (graphicPath != null)
-    // TODO DEBUG graphicPath.draw(canvas);
-
     super.draw(canvas);
   }
 

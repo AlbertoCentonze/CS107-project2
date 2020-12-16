@@ -17,6 +17,13 @@ public class HyperPacmanGUI extends SuperPacmanStatusGUI {
   TextGraphics victoryText;
   Logic win;
 
+  /**
+   * Default constructor for HyperPacmanGUI
+   * 
+   * @param secondPlayer (boolean): true if it's the second player
+   * @param win          (Logic): signal that has to be activated collecting the
+   *                     key
+   */
   protected HyperPacmanGUI(boolean secondPlayer, Logic win) {
     this.secondPlayer = secondPlayer;
     this.win = win;

@@ -52,7 +52,7 @@ public class Generator {
           for (int x = 0; x < size; x++) {
             GeneratorNode currentNode = grid[x][y];
             if (!currentNode.visited) {
-              neighbors = currentNode.getVisitedNeighbors(this.grid, this.size);
+              neighbors = currentNode.getVisitedNeighbors(this.grid);
               if (neighbors.size() != 0) {
                 found = true;
                 GeneratorNode neighbor = neighbors.get((int) Math.floor(Math.random() * neighbors.size()));
@@ -169,7 +169,13 @@ public class Generator {
       return neighbors;
     }
 
-    public List<GeneratorNode> getVisitedNeighbors(GeneratorNode[][] grid, int size) {
+    /**
+     * Return the visited neighbors
+     * 
+     * @param grid (GeneratorNode[][]): the grid containing the nodes
+     * @return (List<GeneratorNode>): list of visited neighbors
+     */
+    public List<GeneratorNode> getVisitedNeighbors(GeneratorNode[][] grid) {
       List<GeneratorNode> neighbors = new ArrayList<GeneratorNode>();
       if (this.x > 0 && grid[this.x - 1][this.y].visited) {
         neighbors.add(grid[this.x - 1][this.y]);
@@ -187,6 +193,11 @@ public class Generator {
     }
   }
 
+  /**
+   * Save the array as an image into a file
+   * 
+   * @param data (boolean[][]): the array containing the cells
+   */
   public static void arrayToImage(boolean[][] data) {
     int height = data.length;
     int width = data[0].length;
@@ -201,7 +212,6 @@ public class Generator {
       }
     }
     try {
-      // Save as PNG
       File file = new File("res/images/behaviors/superpacman/random.png");
       ImageIO.write(outImage, "png", file);
     } catch (IOException e) {

@@ -17,11 +17,17 @@ public class HyperPacmanArea extends Area {
   HyperPacmanPlayer player2;
   Key victoryKey;
 
+  /**
+   * Default constructor for HyperPacmanArea
+   * 
+   * @param size (int): the size of the random arena
+   */
   public HyperPacmanArea(int size) {
     this.size = size;
     mazeGenerator = new Generator(size);
   }
 
+  /** Creates the area by initializing its corresponding behavior */
   protected void createArea() {
     behavior.registerActors(this, victoryKey);
     registerActor(new Background(this));

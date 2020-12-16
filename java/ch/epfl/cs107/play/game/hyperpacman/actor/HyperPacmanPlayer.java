@@ -15,6 +15,13 @@ public class HyperPacmanPlayer extends SuperPacmanPlayer implements Logic {
   private boolean secondPlayer;
   public Boolean win;
 
+  /**
+   * Default constructor for the players of HyperPacman
+   * 
+   * @param ownerArea    (Area): the area of the player
+   * @param position     (DiscreteCoordinates): the initial position of the player
+   * @param secondPlayer (boolean): true if it's the second player
+   */
   public HyperPacmanPlayer(Area ownerArea, DiscreteCoordinates position, boolean secondPlayer) {
     super(ownerArea, position);
     handler = new HyperPacmanPlayerHandler();
@@ -43,7 +50,7 @@ public class HyperPacmanPlayer extends SuperPacmanPlayer implements Logic {
       super.handleMovement();
   }
 
-  private class HyperPacmanPlayerHandler extends SuperPacmanPlayer.SuperPacmanPlayerHandler{
+  private class HyperPacmanPlayerHandler extends SuperPacmanPlayer.SuperPacmanPlayerHandler {
     @Override
     public void interactWith(Key key) {
       win = true;
