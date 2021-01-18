@@ -26,18 +26,3 @@ Just take the key and get out of the stage
 Collect all the diamonds (white dots) to open the gate and get out of the stage
 ### Stage 3
 First collect all the keys in order to have access to all the diamonds; then collect all of them and get out of the stage
-
-## Additional features implemented in the game (bonus)
-### Timer on the GUI
-When you are invulnerable, the life counter tells you for how long you're going to be invincible for.
-### Randomly generated mazes
-Hyperpacman features randomly generate a maze to make every game different!
-### 2 Player mode
-A fully functional local multiplayer
-### Custom generation for the casual maze
-The procedurally generated maze has its own system that can spawn items according to a certain probability.
-
-## Link to external code used to make the game
-Nothing was copy-pasted everything, was carefully read and adapted to the needs of the game (as you can see certain resources were in a completely different language).
-* [Creation of images from 2D boolean array](https://www.experts-exchange.com/questions/20955446/How-to-convert-a-boolean-array-to-a-GIF-image-file-and-vice-versa.html?redirect=/questions/20955446/How-to-convert-a-boolean-array-to-a-GIF-image-file-and-vice-versa.html&offering=3032#succeeded)
-* [Hunt and kill random maze generation algorithm](https://codereview.stackexchange.com/questions/127785/hunt-n-kill-algorithm)
