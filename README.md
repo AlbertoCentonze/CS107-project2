@@ -1,6 +1,14 @@
-# EPFL - CS107 Project 2
+# Superpacman recreation
 
-A game inspired from Superpacman built with Java.
+Originally an assignment from my university this project is a recreation of Superpacman built in Java and a basic game engine given by EPFL.
+
+![Animation](https://user-images.githubusercontent.com/11707683/119104906-19869380-ba1d-11eb-8bd1-625e5d231fe4.gif)
+
+I also decided to go further from the original assignment and implement some additional features:
+* Random level generation using the Hunt and Kill generation algorithm
+* Two local players mode from the same keyboard 
+
+![Animation1](https://user-images.githubusercontent.com/11707683/119105100-4b97f580-ba1d-11eb-989e-a2c7105ff2d3.gif)
 
 ## How to launch the game
 To run the game just launch the main class from Play.java and choose which mode you want to play.
